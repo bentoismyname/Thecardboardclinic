@@ -1,0 +1,113 @@
+CARDBOARD CLINIC — PRICING + CLIENT PORTAL + STAFF WORKSPACE
+Updated: 11 November 2026
+
+WHAT IS INCLUDED
+- index.html: responsive public site with treatments, SGD pricing, estimate widget,
+  public queue, ethical FAQs, curated reviews, client portal and staff workspace.
+- supabase_setup.sql: database tables, strict row-level security, private photo
+  storage, a public aggregate-only queue count and initial pricing records.
+
+NEW PRICE MODEL
+  Photo assessment: Free
+  Written condition report: S$15
+  Surface cleaning: S$25
+  Residue/adhesive: S$35
+  Edge/corner lifts: S$40
+  Warping/curling: S$45
+  Dent/indent: S$50
+  Minor crease: S$70
+  Complex crease/layer separation: from S$100
+  Slab extraction: S$20
+
+VALUE TIERS — for structural treatments ONLY
+  Under S$200: 1.00x
+  S$200–999: 1.20x
+  S$1,000–4,999: 1.50x
+  S$5,000+: bespoke quotation
+  Use documented ungraded current condition market value, never a hopeful PSA 10 figure.
+
+LOCAL DEMO MODE
+Open index.html in any modern browser. Because Supabase credentials are blank,
+this operates in a local preview mode. Client portal and staff portal each have a
+sample-preview button. Example cases and reviews are local to the browser.
+Demo storage is NOT secure or cross-device. DO NOT enter real client information.
+
+LIVE DEPLOYMENT — NETLIFY + SUPABASE
+1. Create a Supabase project (https://supabase.com) and run supabase_setup.sql
+   in SQL Editor. Review the SQL policies before using with real clients.
+2. In Supabase Authentication > Providers, enable Email; disable public Signups
+   in Authentication settings. Provision client/staff users manually as needed.
+   Use verified email addresses to avoid wrong-account access.
+3. Create at least one staff Auth user in Authentication > Users; note its UUID.
+   Run: insert into public.staff(user_id) values ('YOUR-UUID') on conflict do nothing;
+4. Open index.html in a text editor and set:
+   window.CARDBOARD_CLINIC_CONFIG={
+      supabaseUrl:"https://YOUR-PROJECT.supabase.co",
+      supabaseAnonKey:"YOUR-ANON-OR-PUBLISHABLE-KEY"
+   };
+   This is a PUBLIC key, not a secret key. NEVER paste the service_role key.
+5. Deploy index.html (NOT the SQL or README) to Netlify, ideally with a custom
+   domain and HTTPS. Verify admin, client and anonymous permission flows.
+6. Add cards from Staff Workspace using the real client email. Verify the user
+   can see that card only after they sign in with that same email/password.
+7. For customers, manually create Auth accounts before asking them to sign in.
+   In future, use a server-side staff-triggered invitation workflow if desired.
+8. Replace the temporary Google search review link in index.html after your
+   official Google Business Profile is established.
+
+KEY OPERATIONAL RULES
+- Client portal is read-only for records; clients may approve/decline an issued quote.
+- Only staff creates cases, attaches pre-assessment photos, updates stages or rates.
+- Photos are stored in private 'case-media' storage and accessed via short-lived URLs.
+- The public queue is computed from aggregate open-card count only.
+- A case stops counting when a staff member marks it Returned / Closed.
+- Staff controls capacity, weekly throughput, prices, quote and past reviews.
+- Changing base prices does not overwrite any issued historical case quote.
+- Treatment may lead to grading-company rejection as an altered card.
+
+BEFORE GOING LIVE
+- Test row-level security with two unrelated customer accounts, one staff account
+  and an anonymous user. Test photo URLs and quote approval permissions.
+- Establish terms of service, custody/release forms, loss/damage and insurance
+  arrangements, consent acknowledgement, shipping methods and a privacy notice.
+- Agree on how current market value is sourced and how disputes are handled.
+- Regularly back up the Supabase project and restrict staff account access.
+- No live customer accounts or deployment have been created by this package.
+
+BENCHMARKING REFERENCES (viewed November 2026; other businesses' published rates)
+- CardCureSG: https://cardcure.sg/pricing
+- SG CardCare listing: https://www.carousell.sg/p/pokemon-tcg-card-restoration-repair-clean-polish-service-sg-cardcare-1446952590/
+- Poke-Fix: https://poke-fix.com/
+- The Card Medic (AUD): https://www.thecardmedic.com/
+- PSA published grading standards: https://www.psacard.com/gradingstandards
+
+All Cardboard Clinic prices in this package are PROPOSALS, not current quotes from an
+established Cardboard Clinic operation. Prices, treatment eligibility and capacity
+should be validated before publishing to real customers.
+
+
+V4 PRIORITY QUEUE
+Optional S$75 flat add-on per card in public calculator and staff intake. Priority selections are captured in cards.priority_service; staff may change the flag in case updates. The amount is added when staff uses the suggested quote calculator and should be separately checked against the manually issued quote. A priority request is not a guaranteed deadline.
+For an existing Supabase site, run: ALTER TABLE public.cards ADD COLUMN IF NOT EXISTS priority_service boolean NOT NULL DEFAULT false;
+The shared live queue currently reports total active cards; dedicated priority vs standard wait calculations and payment processing are not implemented.
+
+
+V5 ADDITIONS (Portfolio & Milestone)
+- New "Cards restored" public counter = historical cards entered by staff + cases marked returned/closed in this system.
+- Do not include cards already tracked in the historical count; otherwise they would be counted twice.
+- Staff Workspace > Portfolio & Counter: set the historical number and upload an approved, real before-and-after case study.
+- Only permissioned case studies should be uploaded. Photos go into a SEPARATE public portfolio bucket, not private case-media.
+- Published gallery entries can be unpublished, but public image files may remain available via known direct URLs; for revocation, remove objects in Supabase Storage too.
+- Gallery and counter in HTML demo mode are stored only in that browser, not shared. Live use requires Supabase settings.
+- On existing deployments, run V5_upgrade.sql in SQL Editor. New deployments can run supabase_setup.sql (includes V5).
+
+
+V6 CONSENT UPGRADE
+- From a V5 live database: run V6_upgrade.sql once in Supabase SQL editor.
+- From new database: run combined supabase_setup.sql once.
+- Set Supabase project URL + anon key at top of index.html to enable LIVE mode; without credentials this is browser-local demo only.
+- Historical restored counter initial baseline is 53 and adds distinct completed cases. Do not include these 53 cards again as newly closed cases.
+- Client signs a separate seven-acknowledgement form per card with optional image-publicity consent. Staff verify signed record before scheduling.
+- Do not use marketing photos unless separate explicit permission is documented; optional consent does not itself publish photos.
+- Review indemnity wording with Singapore legal counsel before real customer use. Typed name is an electronic signature; this prototype is not an independent e-signature verification service.
+- Signed agreement can be printed from portal. A tamper-evident signed PDF/audit service is recommended for production.

@@ -1,0 +1,1 @@
+{"name":"cardboard-clinic","version":"7.0.0","private":true,"description":"Cardboard Clinic collector care website","scripts":{"build":"node build.mjs","check":"node scripts/check.mjs"}}
