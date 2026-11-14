@@ -1,0 +1,129 @@
+/* Clinical look: no rounded corners anywhere, hairline borders, cool clinical white.
+   Real trading-card shapes (which are rounded in real life) keep their corners. */
+:root{--paper:#f6f8f7;--ivory:#f6f8f7;--white:#ffffff;--radius:0px}
+*,*::before,*::after{border-radius:0 !important}
+/* exceptions: physical card shapes and soft floor shadows */
+.cc-face,.cl-layer{border-radius:5.5%/3.9% !important}
+.cc-shadow{border-radius:50% !important}
+.ba-slider{border-radius:0 !important}
+
+body,.hero,#portfolio,.section{background-color:#f6f8f7}
+#portfolio{background:#f6f8f7 !important}
+#reviews{background:#eef2f0 !important}
+.pricing-area{background:#eef2f0}
+.restored-band,.foot{background:#e9efec}
+
+/* hairline, clinical borders instead of soft shadows */
+.btn{box-shadow:none}
+.panel,.service-card,.review-card,.review-placeholder,.portfolio-tile,.portfolio-empty,.faq details,.queue-card,.note,.calculator,.rv-card{
+  box-shadow:none !important;border:1px solid #d5dcd9}
+.rv-card{border-color:#dbe1de}
+.service-card:hover{transform:none;border-color:#175c59}
+input,select,textarea{border-radius:0 !important}
+
+/* clinical eyebrow labels: small monospace caps */
+.eyebrow,.cl-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace !important;font-size:11px !important;letter-spacing:.14em !important;text-transform:uppercase !important;font-weight:500 !important}
+
+/* loupes become square inspection frames with corner brackets */
+.cc-lens{border:1px solid #111a19 !important;box-shadow:0 16px 40px rgba(28,40,38,.18) !important;position:relative}
+.cc-loupe .cc-lens::before,.cc-loupe .cc-lens::after{content:"";position:absolute;inset:-7px;pointer-events:none;
+  background:
+    linear-gradient(#111a19,#111a19) top left/14px 1px no-repeat,linear-gradient(#111a19,#111a19) top left/1px 14px no-repeat,
+    linear-gradient(#111a19,#111a19) top right/14px 1px no-repeat,linear-gradient(#111a19,#111a19) top right/1px 14px no-repeat,
+    linear-gradient(#111a19,#111a19) bottom left/14px 1px no-repeat,linear-gradient(#111a19,#111a19) bottom left/1px 14px no-repeat,
+    linear-gradient(#111a19,#111a19) bottom right/14px 1px no-repeat,linear-gradient(#111a19,#111a19) bottom right/1px 14px no-repeat}
+.cc-loupe .cc-lens::after{inset:auto;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;
+  background:linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,.9)) center/14px 1px no-repeat,linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,.9)) center/1px 14px no-repeat}
+.cc-loupe span{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px !important;letter-spacing:.08em;text-transform:uppercase;margin-top:12px !important}
+
+/* square markers, buttons and knobs */
+.cc-lines rect{fill:#fff;stroke:#111a19;stroke-width:1.3}
+.cl-lines rect{fill:#f6f8f7;stroke:#111a19;stroke-width:1.3}
+.ba-knob{border:1px solid #111a19}
+.ba-tag{background:#111a19 !important;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500 !important;font-size:10px !important;letter-spacing:.14em !important}
+.rv-avatar{background:#175c59}
+.rv-nav button{border-color:#111a19}
+@media(max-width:760px){.cc-loupe .cc-lens::before{inset:-4px;background-size:9px 1px,1px 9px,9px 1px,1px 9px,9px 1px,1px 9px,9px 1px,1px 9px}}
+
+/* ===== Typography + feel from the medical reference (applied site-wide) ===== */
+:root{--display:'Inter Tight',Inter,system-ui,sans-serif;--text:Inter,system-ui,sans-serif}
+body,button,input,select,textarea{font-family:var(--text)}
+body{color:#2b3433}
+/* headings: clean, tight, medium weight (no more rounded Nunito) */
+h1,h2,h3,h4,.restored-number,.queue-count,.cc-copy h1,.cc-intro-copy h2,.cl-head h2,.ba-copy h2,.rv-head h2,.brandtext{
+  font-family:var(--display) !important;font-weight:500 !important;letter-spacing:-.035em !important}
+h3,h4{letter-spacing:-.02em !important}
+.section-intro h2,.restored-inner h2{font-size:clamp(32px,3.6vw,48px);line-height:1.05}
+/* the two big moments use the reference's uppercase display headline */
+.cc-intro-copy h2,.cc-copy h1{text-transform:uppercase;font-weight:400 !important;letter-spacing:-.045em !important;line-height:.98 !important}
+.cc-intro-copy h2{font-size:clamp(34px,4.8vw,68px) !important}
+.cc-copy h1{font-size:clamp(42px,5.2vw,76px) !important}
+.cc-intro-copy p,.cc-copy p{font-size:14px !important;color:#56605e !important}
+/* second line in grey for the stacked section titles */
+.cl-head h2 span,.ba-copy h2 span{color:#9aa3a0 !important;font-weight:400 !important}
+/* small labels: plain uppercase sans (replaces the monospace labels) */
+.eyebrow,.eyebrow.light,.cl-eyebrow,.cl-labels b,.cl-labels small,.cl-hint,.ba-note,.ba-tag,.rv-foot,.cc-loupe span,.service-num,.tiny,.pill-label,.price-table th,.cl-specs dt{
+  font-family:var(--text) !important;text-transform:uppercase;letter-spacing:.08em !important;font-weight:500 !important}
+.eyebrow,.eyebrow.light,.cl-eyebrow{font-size:11px !important;color:#56605e !important}
+.queue .eyebrow,.calculator .eyebrow{color:#cfe3dc !important}
+.cl-labels small{text-transform:none;letter-spacing:0 !important;font-size:12px !important;line-height:1.5 !important}
+.cl-labels strong{font-family:var(--display);font-weight:500}
+/* nav: small, quiet links like the reference */
+header .navlinks a,header .navlinks button{font-family:var(--text) !important;font-size:13px !important;font-weight:500 !important;color:#1d2726 !important}
+/* buttons: black with small uppercase text; secondary = white with a hairline */
+.btn,.btn.gold,header .nav-actions .btn,header .nav-actions .btn.outline{
+  font-family:var(--text) !important;background:#111a19 !important;color:#fff !important;border:1px solid #111a19 !important;
+  text-transform:uppercase;letter-spacing:.06em;font-size:12px !important;font-weight:500 !important;padding:13px 20px !important;min-height:0 !important}
+.btn:hover,.btn.gold:hover,header .nav-actions .btn:hover{background:#000 !important}
+.btn.ghost,.btn.outline,.btn.small.ghost{background:#fff !important;color:#111a19 !important;border:1px solid #cfd6d3 !important}
+.btn.ghost:hover,.btn.outline:hover{border-color:#111a19 !important;background:#fff !important}
+.calculator .btn.gold{background:#fff !important;color:#111a19 !important;border-color:#fff !important}
+.cc-link,.rv-nav button{font-family:var(--text);text-transform:uppercase;letter-spacing:.06em;font-size:12px !important}
+.rv-nav button{letter-spacing:0}
+/* airy feel: white sections, soft mist behind the hero */
+body,.section,#portfolio,.hero{background-color:#ffffff}
+#portfolio{background:#ffffff !important}
+.pricing-area,#reviews,.rv-section{background:#f5f7f6 !important}
+.ba-section{background:#ffffff}
+.restored-band,.foot{background:#f2f5f4}
+.cc-stage{background:
+  radial-gradient(60% 55% at 12% 18%,rgba(166,214,205,.45) 0%,rgba(166,214,205,0) 70%),
+  radial-gradient(55% 60% at 92% 30%,rgba(236,205,214,.42) 0%,rgba(236,205,214,0) 70%),
+  radial-gradient(70% 60% at 50% 100%,rgba(214,226,236,.55) 0%,rgba(214,226,236,0) 70%),
+  #f7f9f9 !important}
+.cc-white{background:#f7f9f9 !important}
+.panel,.service-card,.review-card,.portfolio-tile,.faq details,.rv-card{background:#fff !important}
+h1,h2,h3,h4{color:#111a19}
+/* keep the dark teal queue block dark */
+.queue,section.queue{background:#175c59 !important}
+.queue h2,.queue h3{color:#f5f8f7}
+/* phones: compact header button so nothing overflows */
+@media(max-width:760px){
+  header .nav-actions .btn,header .nav-actions .btn.outline{font-size:10px !important;padding:9px 11px !important;letter-spacing:.04em}
+  header .nav{gap:10px}
+}
+
+/* inspection boxes ON the card (replaces the side loupes) */
+.cc-loupe{width:var(--d,90px);height:var(--d,90px);text-align:left;z-index:3}
+.cc-lens{width:100% !important;height:100% !important;border:1.5px solid #fff !important;box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 0 0 1px rgba(0,0,0,.15) !important;background-color:transparent !important}
+.cc-loupe .cc-lens::before{content:"";inset:auto;left:7px;top:7px;width:7px;height:7px;background:#fff;position:absolute}
+.cc-loupe .cc-lens::after{display:none}
+.cc-loupe span{position:absolute;left:8px;bottom:7px;right:6px;margin:0 !important;color:#fff;font-family:var(--text) !important;font-size:12px !important;
+  font-weight:500 !important;letter-spacing:0 !important;text-transform:none !important;line-height:1.15;text-shadow:0 1px 6px rgba(0,0,0,.7);white-space:normal;text-align:left}
+@media(max-width:760px){
+  .cc-loupe span{font-size:9.5px !important;left:5px;bottom:4px}
+  .cc-loupe .cc-lens::before{left:4px;top:4px;width:5px;height:5px;background-size:auto}
+}
+
+/* hide the "website preview" demo bar */
+#demoBanner{display:none !important}
+
+/* smaller hero headline + slimmer header */
+.cc-copy h1{font-size:clamp(34px,3.8vw,56px) !important}
+.cc-copy{max-width:520px}
+.cc-intro-copy h2{font-size:clamp(30px,3.8vw,56px) !important}
+header .nav{min-height:68px}
+header .brand-logo{width:132px;max-height:48px}
+header .nav-actions .btn,header .nav-actions .btn.outline{padding:10px 16px !important;font-size:11px !important}
+header .navlinks a,header .navlinks button{font-size:12.5px !important}
+@media(max-width:760px){.cc-copy h1{font-size:32px !important}header .nav{min-height:58px}header .brand-logo{width:108px}}

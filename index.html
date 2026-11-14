@@ -7,7 +7,7 @@
 <link rel="icon" href="assets/icon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#175c59;--ink2:#283337;--ink3:#39464a;--gold:#e6ad80;--gold-light:#d2bd99;--ivory:#f5f1e9;--paper:#f7f5f0;--sage:#75817a;--muted:#73807e;--border:#dfddd6;--white:#fff;--danger:#a85850;--radius:18px;--shadow:0 18px 60px rgba(22,31,31,.09)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.65}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}a:hover{color:var(--gold)}[hidden]{display:none!important}h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{line-height:1.16;letter-spacing:-.045em;font-family:Manrope,system-ui,sans-serif}h1{font-size:clamp(42px,5.3vw,79px);font-weight:600}h2{font-size:clamp(30px,3.5vw,50px);font-weight:600}h3{font-size:21px;font-weight:650}p{color:#62706e}small{font-size:12px}.container{max-width:1190px;padding:0 26px;margin:0 auto}.eyebrow{letter-spacing:.19em;text-transform:uppercase;font-size:11px;font-weight:800;color:#917854}.eyebrow.light{color:var(--gold-light)}.section{padding:90px 0}.section-intro{max-width:720px;margin-bottom:36px}.section-intro p{font-size:17px}.muted{color:var(--muted)}.line{border-bottom:1px solid var(--border)}
@@ -26,6 +26,8 @@ header{z-index:30;position:sticky;top:0;background:rgba(32,40,43,.97);color:var(
 .consent-panel{background:#faf8f3;border:1px solid #d8d0c4;padding:24px;border-radius:12px;margin:22px 0}.consent-panel .panel-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.consent-check{display:flex;align-items:flex-start;gap:11px;padding:12px 0;border-bottom:1px solid #e6e0d7;font-size:13px;line-height:1.6}.consent-check input{accent-color:#9b805b;flex:none;margin-top:4px;width:16px;height:16px}.consent-overview{background:#eee9df;padding:16px;border-radius:8px;font-size:13px;line-height:1.9}.consent-panel .note{margin:14px 0}
 </style>
 <link rel="stylesheet" href="brand.css">
+<link rel="stylesheet" href="scroll-hero.css">
+<link rel="stylesheet" href="clinic.css">
 </head>
 <body>
 <!-- Set your Supabase Project URL and public anon key below to activate the secure multi-user website.
@@ -38,10 +40,63 @@ header{z-index:30;position:sticky;top:0;background:rgba(32,40,43,.97);color:var(
 <nav class="navlinks" id="navlinks"><a href="#services" data-view="public">Services</a><a href="#pricing" data-view="public">Pricing</a><a href="#queue" data-view="public">Our queue</a><a href="#portfolio" data-view="public">Portfolio</a><a href="#process" data-view="public">How it works</a><a href="#reviews" data-view="public">Reviews</a></nav>
 <div class="nav-actions"><a href="#portal" data-view="portal" class="btn outline small">Your card tracker ›</a><button class="mobile-nav" id="mobileNav" aria-label="Toggle menu" aria-expanded="false">☰</button></div></div></header>
 <main id="publicView">
-<section class="hero" id="home"><div class="container hero-grid">
-<div class="hero-copy"><span class="eyebrow light"><span class="hello-dot"></span> Card care, from one collector to another</span><h1>Got a card that<br>needs some <em>help?</em></h1><p>A dent, a lifted corner, a card you can’t quite give up on. Let’s take a closer look and talk through what can be done.</p><div class="hero-ctas"><a href="#process" class="btn gold">Let’s look at your card <span>›</span></a><a href="#pricing" class="btn ghost">See our prices</a></div><div class="hero-foot"><span><b>✓</b> Free photo assessment</span><span><b>✓</b> Quote before treatment</span><span><b>✓</b> Track your card’s progress</span></div></div>
-<figure class="hero-photo"><img src="assets/collector-workbench.webp" width="736" height="482" fetchpriority="high" alt="Illustrative collector workbench with a card in a protective holder"><figcaption><span class="care-plus" aria-hidden="true">+</span><span><strong>Every card means something.</strong><small>We’ll help you understand its options.</small></span></figcaption><span class="photo-disclosure">Brand illustration</span></figure>
-</div></section>
+<section class="cc-scroll" id="home" aria-label="Cardboard Clinic introduction">
+<div class="cc-stage" id="ccStage">
+<div class="cc-intro-copy" id="ccIntro"><h2>Every card has a story.</h2><p>Some just need a little help.</p></div>
+<div class="cc-shadow" id="ccShadow"></div>
+<svg class="cc-lines" id="ccLines" aria-hidden="true"></svg>
+<div class="cc-worn" id="ccWorn"><img src="assets/hero/card-worn.webp" width="1800" height="2533" alt="A worn trading card with corner whitening, scratches and edge wear"></div>
+<div class="cc-loupes" aria-hidden="true">
+<div class="cc-loupe" data-fx=".07" data-fy=".05" data-ay=".16" data-side="left"><div class="cc-lens"></div><span>Corner whitening</span></div>
+<div class="cc-loupe" data-fx=".08" data-fy=".94" data-ay=".84" data-side="left"><div class="cc-lens"></div><span>Soft, stained corner</span></div>
+<div class="cc-loupe" data-fx=".78" data-fy=".27" data-ay=".16" data-side="right"><div class="cc-lens"></div><span>Surface scratches</span></div>
+<div class="cc-loupe" data-fx=".97" data-fy=".80" data-ay=".84" data-side="right"><div class="cc-lens"></div><span>Edge wear</span></div>
+</div>
+<div class="cc-white" id="ccWhite"></div>
+<div class="cc-card-wrap" id="ccCardWrap"><div class="cc-card" id="ccCard">
+<div class="cc-face"><img src="assets/hero/card-restored.webp" width="1800" height="2533" alt="The same card, restored"><div class="cc-shine" id="ccShine"></div></div>
+<div class="cc-face cc-back"><img src="assets/hero/layer-back.webp" width="700" height="995" alt=""></div>
+</div></div>
+<div class="cc-copy" id="ccCopy"><h1>Got a card that<br>needs some help?</h1><p>A dent, a lifted corner, a card you can’t quite give up on. <br>Let’s take a closer look and talk through what can be done.</p><a href="#process" class="cc-link">Let’s look at your card <span aria-hidden="true">→</span></a></div>
+<div class="cl-head" id="clHead"><span class="cl-eyebrow">Inside the card</span><h2>Six layers.<br><span>One card.</span></h2></div>
+<div class="cl-scene"><div class="cl-stack" id="clStack">
+<div class="cl-layer"><img src="assets/hero/layer-back.webp" alt=""></div>
+<div class="cl-layer"><img src="assets/hero/layer-paper.webp" alt=""></div>
+<div class="cl-layer cl-core"><img src="assets/hero/layer-core.webp" alt=""></div>
+<div class="cl-layer"><img src="assets/hero/layer-paper.webp" alt="" style="transform:scaleX(-1)"></div>
+<div class="cl-layer"><img src="assets/hero/card-restored.webp" alt=""></div>
+<div class="cl-layer cl-coat"><img src="assets/hero/layer-coat.webp" alt=""></div>
+</div></div>
+<svg class="cl-lines" id="clLines" aria-hidden="true"></svg>
+<ol class="cl-labels" id="clLabels">
+<li data-side="right"><b>01</b><strong>Protective coating</strong><small>A thin, clear top layer that shields the ink from wear.</small></li>
+<li data-side="left"><b>02</b><strong>Front print layer</strong><small>The artwork, text and borders, plus holofoil on special rarities.</small></li>
+<li data-side="right"><b>03</b><strong>Paper layer, front</strong><small>The upper sheet of cardstock that holds the front design.</small></li>
+<li data-side="left"><b>04</b><strong>Core layer</strong><small>A dark inner layer that blocks light and helps verify authenticity.</small></li>
+<li data-side="right"><b>05</b><strong>Paper layer, back</strong><small>The lower sheet of cardstock.</small></li>
+<li data-side="left"><b>06</b><strong>Back print layer</strong><small>The card’s back design and ink.</small></li>
+</ol>
+<span class="cc-disclose" id="ccDisclose">Brand illustration</span>
+</div>
+</section>
+<section class="ba-section" id="before-after" aria-labelledby="baTitle">
+<div class="ba-inner">
+<div class="ba-copy">
+<span class="cl-eyebrow">Real results</span>
+<h2 id="baTitle">Same card.<br><span>Second chance.</span></h2>
+<p>Drag the bar to compare a real card before and after our care. Softened edges, lifted whitening and a cleaner surface, without changing what makes it yours.</p>
+<a href="#process" class="cc-link">Let’s look at your card <span aria-hidden="true">→</span></a>
+<small class="ba-note">Real customer card, photographed in hand before and after treatment.</small>
+</div>
+<div class="ba-slider" id="baSlider" style="--pos:50%">
+<img class="ba-img ba-after" src="assets/hero/ba-after.webp" width="900" height="1257" alt="The card after treatment" loading="lazy">
+<div class="ba-before-wrap"><img class="ba-img" src="assets/hero/ba-before.webp" width="900" height="1257" alt="The card before treatment" loading="lazy"></div>
+<span class="ba-tag ba-tag-before">Before</span><span class="ba-tag ba-tag-after">After</span>
+<div class="ba-handle" aria-hidden="true"><span class="ba-knob"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+<input class="ba-range" id="baRange" type="range" min="0" max="100" value="50" step="0.1" aria-label="Drag to compare before and after">
+</div>
+</div>
+</section>
 <section class="restored-band" id="restored"><div class="container restored-inner"><div><span class="eyebrow">A little care goes a long way</span><h2 style="margin:12px 0 10px">A card worth caring for.<br>A story worth keeping.</h2><p style="margin:0;max-width:530px">Cards repaired and restored, one at a time. Each card counts once, even when it needs more than one fix.</p></div><div><div class="restored-number" id="restoredCount" aria-live="polite">—<small>Cards restored / cared for to date</small></div><div style="font-size:11px;color:#7f867d;margin-top:14px" id="restoredSource">Verified through clinic records</div></div></div></section>
 <section class="section" id="services"><div class="container"><div class="section-intro"><span class="eyebrow">What needs a little care?</span><h2>Small details. Careful hands.</h2><p>Every card is different. We’ll check yours, explain what might improve and tell you honestly when it’s best left alone.</p></div>
 <div class="columns3">
@@ -67,7 +122,18 @@ header{z-index:30;position:sticky;top:0;background:rgba(32,40,43,.97);color:var(
 <section class="section queue" id="queue"><div class="container queue-grid"><div><span class="eyebrow light">A few cards at a time</span><h2>Who’s on the workbench?</h2><p>Good card care takes time. We keep our queue manageable so every card gets the attention it needs.</p><p style="font-size:13px">Waiting times are indicative, recalculated from current caseload and our expected weekly processing rate. Complex restoration can take longer. Priority Queue (+ S$75 per card) may be available after staff confirmation; standard timing varies with the treatment.</p><a href="#process" class="btn outline">Understand Our Process</a></div><div class="queue-card"><div class="eyebrow light" style="margin-bottom:8px">Cards in our care <span id="queueMode">· Preview</span></div><div class="queue-count" id="queueCount">— <span>/ 25 slots</span></div><div class="progress-rail"><div class="progress-fill" id="queueFill"></div></div><div style="display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#c8cfc8"><span id="queueStatus">Checking capacity…</span><span id="queueAvailable">— available</span></div><div class="metric-row" style="margin-top:24px"><span>Estimated time before treatment begins</span><b id="queueWait">—</b></div><div class="metric-row"><span>Planned intake / processing pace</span><b id="queueRate">—</b></div><small style="color:#a2ada5" id="queueFootnote">We may pause new intakes when capacity is reached.</small></div></div></section>
 <section class="section" id="portfolio" style="background:#f5f3ed"><div class="container"><div class="section-intro"><span class="eyebrow">On the workbench</span><h2>A closer look at our work.</h2><p>Selected before-and-after photographs from completed work. Each case is published individually with permission. Results vary, and all treatments are disclosed rather than represented as factory-original condition.</p></div><div class="portfolio-grid" id="portfolioGrid"><div class="portfolio-empty">Published restoration cases will appear here.</div></div><p class="statusline" style="margin-top:22px">Photography is illustrative of documented individual outcomes only. Some physical marks may remain, and grading acceptance is not guaranteed.</p></div></section>
 <section class="section" id="process"><div class="container"><div class="section-intro"><span class="eyebrow">Getting started</span><h2>From your collection to our care.</h2><p>Start with a conversation and photos of your card. We’ll arrange an intake if it looks suitable, then set up your private card tracker.</p></div><div class="process-grid"><div class="step"><div class="number">01</div><h3>Say hello</h3><p>Share clear front, back and close-up photos through your usual chat with us. We’ll offer an initial opinion and arrange intake when suitable.</p></div><div class="step"><div class="number">02</div><h3>Know your options</h3><p>We assess feasibility, disclose potential grading implications and issue a treatment-specific quotation for consent.</p></div><div class="step"><div class="number">03</div><h3>Care at every step</h3><p>Treatment begins only after per-card consent is signed and verified by clinic staff. Progress is logged through quality checks.</p></div><div class="step"><div class="number">04</div><h3>Back to your collection</h3><p>Final photographs, outcomes and remaining limitations are documented in the private case record before return.</p></div></div><div style="margin-top:30px"><a href="#portal" data-view="portal" class="btn">Open Client Progress Tracker ›</a></div></div></section>
-<section class="section" id="reviews" style="background:#eeece5"><div class="container"><div class="section-intro"><span class="eyebrow">From fellow collectors</span><h2>What collectors say.</h2><p>Only genuine, previously received reviews approved for publication appear here. Reviews are not collected through this website.</p></div><div id="reviewList" class="review-grid"></div><div style="margin-top:23px"><span style="font-size:12px;color:#7e8781">Our official Google Business Profile and its review link will be added once established.</span></div></div></section>
+<section class="rv-section" id="reviews" aria-labelledby="rvTitle">
+<div class="rv-head"><h2 id="rvTitle">What our clients are saying</h2></div>
+<div class="rv-body">
+<div class="rv-side">
+<span class="rv-quote" aria-hidden="true">“</span>
+<p>Real words from collectors who trusted us with their cards.</p>
+<div class="rv-nav"><button type="button" id="rvPrev" aria-label="Previous reviews">←</button><span class="rv-progress" aria-hidden="true"><i id="rvBar"></i></span><button type="button" id="rvNext" aria-label="Next reviews">→</button></div>
+</div>
+<div class="rv-track" id="reviewList" tabindex="0" aria-label="Client reviews"></div>
+</div>
+<p class="rv-foot">Only genuine reviews, published with the client’s permission.</p>
+</section>
 <section class="section" id="faq"><div class="container"><div class="section-intro"><span class="eyebrow">Good questions</span><h2>A few things you might be wondering.</h2></div><div class="faq"><details open><summary>Will repair improve my card's grade?</summary><p>No grading outcome is guaranteed. Treatments such as pressing, wax/polish, recolouring, scratch removal and added substances may cause a grader to classify a card as altered. We discuss these risks before consent.</p></details><details><summary>Can you repair edge whitening or holo scratches?</summary><p>Missing printed pigment or foil cannot be restored to original factory condition through conservative care. We will not promise an invisible repair or replace material to simulate a factory surface.</p></details><details><summary>Why is the quote based on current card value?</summary><p>Structural work on rare, fragile or high-value cards carries greater handling risk, documentation needs and time. Simple surface care is priced separately without this multiplier.</p></details><details><summary>How does my client portal work?</summary><p>The clinic registers your card and links it to your email address. Once your private account is provisioned, sign in with that email and password to view the tracking record, quote and photographs. Clients cannot submit new cases on the website.</p></details><details><summary>Can I approve a quotation in the portal?</summary><p>Yes. Each card requires a signed Consent & Authorisation form confirming the exact quotation and treatment scope. Clinic staff must verify the agreement before treatment starts.</p></details><details><summary>Can you treat every type of damage?</summary><p>No. Severe water damage, mould, torn cardstock, deep foil loss and structurally compromised vintage cards may be too risky. We may recommend preservation without physical intervention.</p></details></div></div></section>
 </main>
 <section id="portalView" class="app-view" hidden><div class="container"><div class="app-head"><div><span class="eyebrow">Your private card tracker</span><h1>How’s your card doing?</h1><p>Sign in to view the card records created by Cardboard Clinic for your email address.</p></div><a href="#home" data-view="public" class="btn ghost">‹ Return to Website</a></div><div id="portalContent"></div></div></section>
@@ -75,4 +141,6 @@ header{z-index:30;position:sticky;top:0;background:rgba(32,40,43,.97);color:var(
 <footer class="foot"><div class="container"><div class="foot-grid"><div><div class="brand"><img class="brand-logo" src="assets/logo.png" width="230" height="81" alt="Cardboard Clinic"></div><p>Card care, from one collector to another. Honest advice, clear quotes and a little help for the cards that matter.</p></div><div class="foot-links"><a href="#services" data-view="public">Treatments</a><a href="#pricing" data-view="public">Pricing</a><a href="#queue" data-view="public">Waiting Time</a><a href="#portfolio" data-view="public">Portfolio</a><a href="#portal" data-view="portal">Client Portal</a><a href="#admin" data-view="admin">Staff Access</a></div></div><div class="foot-bottom"><span>© <span id="year"></span> Cardboard Clinic · Singapore</span><span>Independent service. Not affiliated with PSA, BGS, CGC or card publishers. Grading-company decisions are independent.</span></div></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="app.js"></script>
+<script src="scroll-hero.js"></script>
+<script src="before-after.js"></script>
 </body></html>
