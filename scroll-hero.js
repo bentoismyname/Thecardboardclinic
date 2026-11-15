@@ -27,8 +27,14 @@ setHdr();
 // The opening (worn card + spin) plays once per browser. After that the page starts on the restored card.
 const START=.37;let played=false;try{played=localStorage.getItem('cc_intro_played')==='1'}catch(e){}
 if(played)hero.classList.add('cc-played');
-let lastP=0;
-function render(p){lastP=p;
+let lastP=0,shineAt=0;
+const isResting=v=>v>=.37&&v<=.42;
+function playShine(){const now=Date.now();if(reduce||now-shineAt<1800)return;shineAt=now;
+  shine.classList.remove('cc-idle-shine');wrap.classList.remove('cc-idle-glow');void shine.offsetWidth;
+  shine.classList.add('cc-idle-shine');wrap.classList.add('cc-idle-glow');
+  setTimeout(()=>{shine.classList.remove('cc-idle-shine');wrap.classList.remove('cc-idle-glow')},1700);}
+function render(p){if(isResting(p)&&!isResting(lastP)&&lastP>p)setTimeout(playShine,250); // scrolled back up to the card
+lastP=p;
   const W=stage.clientWidth,H=stage.clientHeight,mobile=W<760;
   const ch=mobile?H*.4:Math.min(H*.6,540), cw=ch*.7104;
   [worn,wrap,shadow,stack].forEach(el=>el.style.setProperty('--cw',cw+'px'));
@@ -81,7 +87,7 @@ function render(p){lastP=p;
   const c=out(seg(p,.31,.37))*(1-seg(p,.42,.46));
   copy.style.opacity=c;copy.style.pointerEvents=c>.5?'auto':'none';
   copy.style.transform=(mobile?'':'translateY(-50%) ')+`translateY(${lerp(24,0,out(seg(p,.31,.37)))-20*seg(p,.42,.46)}px)`;
-  disc.style.opacity=seg(p,.33,.37)*(1-seg(p,.50,.54))+seg(p,.56,.62)*(1-seg(p,.96,1));
+  disc.style.opacity=0;
 
   // ---- E: six layers ----
   const inLayers=p>=.54;
@@ -145,10 +151,7 @@ onScroll();
   if(reduce)return;
   const next=()=>setTimeout(run,10000+Math.random()*10000);
   function run(){
-    const resting=lastP>=.37&&lastP<=.42&&!document.hidden&&hero.offsetHeight;
-    if(resting){shine.classList.remove('cc-idle-shine');wrap.classList.remove('cc-idle-glow');void shine.offsetWidth;
-      shine.classList.add('cc-idle-shine');wrap.classList.add('cc-idle-glow');
-      setTimeout(()=>{shine.classList.remove('cc-idle-shine');wrap.classList.remove('cc-idle-glow')},1700);}
+    if(isResting(lastP)&&!document.hidden&&hero.offsetHeight)playShine();
     next();
   }
   next();

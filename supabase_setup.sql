@@ -149,7 +149,7 @@ grant select on public.pricing_services, public.pricing_tiers, public.clinic_set
 grant select on public.staff, public.cards, public.case_updates, public.case_photos, public.quote_decisions to authenticated;
 grant insert,update,delete on public.cards, public.case_updates, public.case_photos, public.pricing_services, public.pricing_tiers, public.clinic_settings, public.client_reviews to authenticated;
 grant insert on public.quote_decisions to authenticated;
-grant execute on function public.is_staff() to authenticated;
+grant execute on function public.is_staff() to anon, authenticated;
 
 -- Staff marker is readable only by its own Auth user.
 drop policy if exists staff_self on public.staff;

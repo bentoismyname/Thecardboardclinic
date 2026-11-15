@@ -452,3 +452,5 @@ header .navlinks a,header .navlinks button{font-size:12.5px !important}
 
 /* "A card worth caring for" counter band removed from the page */
 #restored{display:none !important}
+
+#ccDisclose{display:none !important}
