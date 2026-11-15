@@ -14,7 +14,7 @@ t.setCases([{id:'same',closed_at:'2026-11-11'},{id:'same',closed_at:'2026-11-11'
 const card={id:'c1',owner_email:'test@example.com',stage:5,quote_amount:75,treatment_codes:['dent'],priority_service:false,quote_notes:'',market_value:1000};
 t.setCases([card]);t.setConsents([]);assert.equal(t.consentReady(card),false);
 const agreement={case_id:'c1',scope_snapshot:t.scopeSnapshot(card),admin_verified_at:'2026-11-11',agreement_version:'CC-CONSENT-2026-11-v1',created_at:'2026-11-11'};
-t.setConsents([agreement]);assert.equal(t.consentReady(card),true);assert.equal(t.consentReady({...card,quote_amount:85}),false);
+t.setConsents([agreement]);assert.equal(t.consentReady(card),true);assert.equal(t.consentReady({...card,id:'other'}),false);
 t.setConsents([]);await assert.rejects(t.updateCase({dataset:{id:'c1'},fields:{stage:'7',quote_status:'issued',market_value:'1000',quote_amount:'75',quote_notes:''}}),/signed and staff-verified consent/);
 for(const file of ['index.html','brand.css','assets/logo.png','assets/icon.png','assets/collector-workbench.webp'])assert.ok(fs.existsSync(file),file);
 assert.ok(!fs.readFileSync('index.html','utf8').includes('By The Cardboard Collective'));

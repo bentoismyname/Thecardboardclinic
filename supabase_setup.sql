@@ -362,7 +362,7 @@ create policy consent_read on public.case_consents for select to authenticated u
 drop policy if exists consent_sign on public.case_consents;
 create policy consent_sign on public.case_consents for insert to authenticated with check(
  admin_verified_at is null and verified_by is null and
- exists(select 1 from public.cards c where c.id=case_id and lower(c.owner_email)=lower(coalesce(auth.jwt()->>'email','')) and c.quote_status='issued' and c.quote_amount is not null));
+ exists(select 1 from public.cards c where c.id=case_id and lower(c.owner_email)=lower(coalesce(auth.jwt()->>'email',''))));
 drop policy if exists consent_verify_staff on public.case_consents;
 create policy consent_verify_staff on public.case_consents for update to authenticated using(public.is_staff()) with check(public.is_staff());
 
@@ -378,9 +378,8 @@ begin
  if new.stage>=7 then
   select count(*) into valid_count from public.case_consents a
   where a.case_id=new.id and a.admin_verified_at is not null
-    and a.agreement_version='CC-CONSENT-2026-11-v1'
-    and a.scope_snapshot::jsonb=public.card_consent_scope(new)::jsonb;
-  if valid_count=0 then raise exception 'Signed and admin-verified consent for the current quotation is required before scheduling or treatment.'; end if;
+    and a.agreement_version='CC-CONSENT-2026-11-v1';
+  if valid_count=0 then raise exception 'A signed and admin-verified consent form is required before payment and treatment.'; end if;
  end if;
  return new;
 end $$;
@@ -393,7 +392,6 @@ declare c public.cards;
 begin
  select * into c from public.cards where id=new.case_id;
  if c.id is null then raise exception 'Card not found'; end if;
- if new.scope_snapshot::jsonb<>public.card_consent_scope(c)::jsonb then raise exception 'Consent must match the currently issued quotation'; end if;
  if tg_op='INSERT' then
   if new.admin_verified_at is not null then raise exception 'Cannot self-verify consent';end if;
  elsif tg_op='UPDATE' then
