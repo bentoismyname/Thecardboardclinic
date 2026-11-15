@@ -435,3 +435,20 @@ header .navlinks a,header .navlinks button{font-size:12.5px !important}
   border-radius:50% !important;box-shadow:0 10px 26px rgba(0,0,0,.25);transition:transform .2s,box-shadow .2s}
 .wa-float:hover{transform:scale(1.07);box-shadow:0 14px 32px rgba(0,0,0,.3)}
 @media(max-width:760px){.wa-float{right:16px;bottom:16px;width:52px;height:52px}.ft-top{grid-template-columns:1fr 1fr}}
+
+/* FAQ: heading on the left, the six questions stacked on the right (desktop) */
+@media(min-width:900px){
+  #faq .container{display:grid;grid-template-columns:minmax(260px,.9fr) 1.6fr;gap:72px;align-items:start}
+  #faq .section-intro{position:sticky;top:120px;margin:0}
+  #faq .section-intro h2{font-size:clamp(34px,3.4vw,48px)}
+  #faq .faq{grid-template-columns:1fr !important;gap:12px}
+}
+#faq .faq details{padding:0}
+#faq .faq summary{padding:22px 24px;list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+#faq .faq summary::-webkit-details-marker{display:none}
+#faq .faq summary::after{content:"+";font-size:22px;font-weight:300;line-height:1;color:#111a19;transition:transform .2s}
+#faq .faq details[open] summary::after{transform:rotate(45deg)}
+#faq .faq details p{padding:0 24px 22px;margin:0}
+
+/* "A card worth caring for" counter band removed from the page */
+#restored{display:none !important}

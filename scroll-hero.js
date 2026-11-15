@@ -27,7 +27,8 @@ setHdr();
 // The opening (worn card + spin) plays once per browser. After that the page starts on the restored card.
 const START=.37;let played=false;try{played=localStorage.getItem('cc_intro_played')==='1'}catch(e){}
 if(played)hero.classList.add('cc-played');
-function render(p){
+let lastP=0;
+function render(p){lastP=p;
   const W=stage.clientWidth,H=stage.clientHeight,mobile=W<760;
   const ch=mobile?H*.4:Math.min(H*.6,540), cw=ch*.7104;
   [worn,wrap,shadow,stack].forEach(el=>el.style.setProperty('--cw',cw+'px'));
@@ -72,7 +73,10 @@ function render(p){
   shine.style.transform='translateX('+lerp(-95,95,ease(seg(p,.255,.365)))+'%)';
   wrap.style.filter=sh>0?`drop-shadow(0 0 ${26*sh}px rgba(255,255,255,${.75*sh})) brightness(${1+.12*sh})`:'none';
   const edge=Math.abs(Math.cos(rotY*Math.PI/180));
-  shadow.style.transform=`translate(${cx-cw/2}px,${cy+ch*scale/2+(mobile?26:34)*scale-bob*.5}px) scaleX(${lerp(.3,1,edge)*scale})`;
+  // shadow sits under the card's real on-screen outline (follows the tilt and the spin)
+  const cr=card.getBoundingClientRect(),srr=stage.getBoundingClientRect();
+  const shW=Math.max(cr.width*.82,8), shX=cr.left-srr.left+cr.width/2, shY=cr.bottom-srr.top+(mobile?14:22)+Math.max(0,-bob)*.4;
+  shadow.style.transform=`translate(${shX-cw/2}px,${shY-13}px) scaleX(${shW/cw})`;
   shadow.style.opacity=p<.54?lerp(.55,1,edge):0;
   const c=out(seg(p,.31,.37))*(1-seg(p,.42,.46));
   copy.style.opacity=c;copy.style.pointerEvents=c>.5?'auto':'none';
@@ -135,4 +139,18 @@ function onScroll(){
 addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',()=>{setHdr();onScroll()});addEventListener('hashchange',()=>setTimeout(onScroll,50));
 if(document.fonts)document.fonts.ready.then(onScroll);
 onScroll();
+
+// While the restored card rests beside the headline, a shine sweeps across it every 10–20 seconds.
+(function idleShine(){
+  if(reduce)return;
+  const next=()=>setTimeout(run,10000+Math.random()*10000);
+  function run(){
+    const resting=lastP>=.37&&lastP<=.42&&!document.hidden&&hero.offsetHeight;
+    if(resting){shine.classList.remove('cc-idle-shine');wrap.classList.remove('cc-idle-glow');void shine.offsetWidth;
+      shine.classList.add('cc-idle-shine');wrap.classList.add('cc-idle-glow');
+      setTimeout(()=>{shine.classList.remove('cc-idle-shine');wrap.classList.remove('cc-idle-glow')},1700);}
+    next();
+  }
+  next();
+})();
 })();

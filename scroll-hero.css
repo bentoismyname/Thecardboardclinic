@@ -177,3 +177,10 @@ header .nav{min-height:80px}
 /* stronger shine sweep after the spin lands */
 .cc-shine{inset:-10% -40% !important;mix-blend-mode:screen !important;
   background:linear-gradient(105deg,transparent 36%,rgba(160,235,255,.35) 43%,rgba(255,255,255,.95) 50%,rgba(255,220,245,.4) 56%,transparent 64%) !important}
+
+/* repeating idle shine */
+.cc-shine.cc-idle-shine{animation:ccIdleShine 1.5s cubic-bezier(.4,0,.2,1) both}
+@keyframes ccIdleShine{0%{opacity:0;transform:translateX(-95%)}15%{opacity:1}85%{opacity:1}100%{opacity:0;transform:translateX(95%)}}
+.cc-card-wrap.cc-idle-glow{animation:ccIdleGlow 1.5s ease both}
+@keyframes ccIdleGlow{0%,100%{filter:none}50%{filter:drop-shadow(0 0 22px rgba(255,255,255,.7)) brightness(1.1)}}
+@media(prefers-reduced-motion:reduce){.cc-shine.cc-idle-shine,.cc-card-wrap.cc-idle-glow{animation:none}}
