@@ -62,7 +62,7 @@ create table if not exists public.cards (
   quote_status text not null default 'pending' check(quote_status in ('pending','issued','approved','declined')),
   quote_notes text not null default '',
   notes text not null default '',
-  stage smallint not null default 1 check (stage between 1 and 11),
+  stage smallint not null default 1 check (stage between 1 and 12),
   closed_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -73,7 +73,7 @@ create index if not exists cards_open_idx on public.cards (closed_at);
 create table if not exists public.case_updates (
   id uuid primary key default gen_random_uuid(),
   case_id uuid not null references public.cards(id) on delete cascade,
-  stage smallint not null check(stage between 1 and 11),
+  stage smallint not null check(stage between 1 and 12),
   message text not null default '',
   created_at timestamptz not null default now()
 );

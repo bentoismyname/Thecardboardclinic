@@ -1,6 +1,6 @@
 /* Cardboard Clinic — one continuous scroll:
    worn card → zoom into it → restored card comes out → headline → flies to the middle → opens into its six layers */
-.cc-scroll{position:relative;height:1150vh;background:#f6f8f7}
+.cc-scroll{position:relative;height:950vh;background:#f6f8f7}
 .cc-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;font-family:Inter,'DM Sans',system-ui,sans-serif;color:#111a19;
   background:radial-gradient(110% 80% at 55% 10%,#ffffff 0%,#f6f8f7 50%,#e9eeec 100%)}
 
@@ -168,3 +168,12 @@ header .nav{min-height:80px}
   .rv-card{flex-basis:78vw}
   .rv-track{padding-right:20px}
 }
+
+.cc-front-new{position:absolute;inset:0;opacity:0}
+
+/* after the intro has played once, that part of the scroll is removed */
+.cc-scroll.cc-played{height:635.5vh}
+
+/* stronger shine sweep after the spin lands */
+.cc-shine{inset:-10% -40% !important;mix-blend-mode:screen !important;
+  background:linear-gradient(105deg,transparent 36%,rgba(160,235,255,.35) 43%,rgba(255,255,255,.95) 50%,rgba(255,220,245,.4) 56%,transparent 64%) !important}
