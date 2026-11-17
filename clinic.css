@@ -630,3 +630,10 @@ html body .cc-link:hover{background:#1f7a4a;transform:translateY(-1px)}
   .pf-hero::after{display:none}
   .pf-hero>*:not(img){padding:0 20px}
 }
+/* phones: photo fills the whole hero, text overlaid on a dark fade */
+@media(max-width:760px){
+  .pf-hero{min-height:560px;padding:24px 20px 28px !important;justify-content:flex-end}
+  .pf-hero-img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-position:center 30%;margin:0}
+  .pf-hero::after{display:block;background:linear-gradient(0deg,rgba(10,14,13,.95) 0%,rgba(10,14,13,.8) 38%,rgba(10,14,13,.15) 70%,rgba(10,14,13,0) 100%)}
+  .pf-hero>*:not(img){padding:0}
+}
