@@ -609,3 +609,24 @@ html body .cc-link:hover{background:#1f7a4a;transform:translateY(-1px)}
 /* cases come in one after another, left to right */
 .pf-page.rv-ready .pf-case[data-rv="card"]{transform:translateX(-40px)}
 .pf-page.rv-ready.rv-in .pf-case[data-rv="card"]{transform:none}
+
+/* portfolio hero banner */
+.pf-hero{position:relative;overflow:hidden;min-height:clamp(320px,42vw,520px);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(24px,4vw,48px) !important;margin:0 0 40px !important;max-width:none !important;background:#111a19}
+.pf-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;z-index:0}
+.pf-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,14,13,.82) 0%,rgba(10,14,13,.55) 45%,rgba(10,14,13,0) 75%),linear-gradient(0deg,rgba(10,14,13,.6),rgba(10,14,13,0) 50%);z-index:1}
+.pf-hero>*:not(img){position:relative;z-index:2;max-width:520px}
+.pf-hero .eyebrow{color:#9fd6b5 !important}
+.pf-hero h2{color:#fff !important}
+.pf-hero p{color:rgba(255,255,255,.82) !important}
+@media(max-width:760px){.pf-hero{min-height:420px}.pf-hero-img{object-position:center 30%}.pf-hero::after{background:linear-gradient(0deg,rgba(10,14,13,.88) 0%,rgba(10,14,13,.5) 55%,rgba(10,14,13,.1) 100%)}}
+@media(min-width:761px){
+  .pf-hero{background:#1b1b1b}
+  .pf-hero-img{left:auto;right:0;width:66%;object-position:center 45%}
+  .pf-hero::after{background:linear-gradient(90deg,#1b1b1b 0%,#1b1b1b 34%,rgba(27,27,27,.6) 44%,rgba(27,27,27,0) 58%)}
+}
+@media(max-width:760px){
+  .pf-hero{min-height:0;padding:0 0 26px !important;background:#1b1b1b}
+  .pf-hero-img{position:relative;inset:auto;height:auto;aspect-ratio:16/10;object-position:center 60%;margin-bottom:22px}
+  .pf-hero::after{display:none}
+  .pf-hero>*:not(img){padding:0 20px}
+}
