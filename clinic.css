@@ -595,3 +595,7 @@ body:has(.db)>header,body:has(.db) .app-head,body:has(.db) .wa-float,body:has(.d
 
 /* buttons: a slight, professional curve (everything else stays square) */
 html body .btn,html body .au-btn,html body .gp-btn,html body .db-btn,html body button.btn,html body a.btn,html body input[type=submit]{border-radius:6px !important}
+
+/* hero call-to-action as a proper button */
+html body .cc-link{padding:15px 24px;background:#111a19;color:#fff !important;border-radius:6px !important;font-weight:600;transition:background .2s,transform .2s}
+html body .cc-link:hover{background:#1f7a4a;transform:translateY(-1px)}
