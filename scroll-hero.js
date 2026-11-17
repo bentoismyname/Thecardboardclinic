@@ -35,7 +35,7 @@ function playShine(){const now=Date.now();if(reduce||now-shineAt<1800)return;shi
   setTimeout(()=>{shine.classList.remove('cc-idle-shine');wrap.classList.remove('cc-idle-glow')},1700);}
 function render(p){if(isResting(p)&&!isResting(lastP)&&lastP>p)setTimeout(playShine,250); // scrolled back up to the card
 lastP=p;
-  const W=stage.clientWidth,H=stage.clientHeight,mobile=W<760;
+  const W=stage.clientWidth,H=stage.clientHeight,mobile=W<=1000;
   const ch=mobile?H*.4:Math.min(H*.6,540), cw=ch*.7104;
   [worn,wrap,shadow,stack].forEach(el=>el.style.setProperty('--cw',cw+'px'));
   const sr=stage.getBoundingClientRect();
