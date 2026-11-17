@@ -599,3 +599,13 @@ html body .btn,html body .au-btn,html body .gp-btn,html body .db-btn,html body b
 /* hero call-to-action as a proper button */
 html body .cc-link{padding:15px 24px;background:#111a19;color:#fff !important;border-radius:6px !important;font-weight:600;transition:background .2s,transform .2s}
 html body .cc-link:hover{background:#1f7a4a;transform:translateY(-1px)}
+
+/* portfolio: photos edge to edge, labels sit on the photo (no white strip) */
+.pf-pair{background:none;gap:4px}
+.pf-pair figure{position:relative;display:block}
+.pf-pair img{aspect-ratio:3/4;object-fit:cover}
+.pf-tag{position:absolute;left:10px;bottom:10px;margin:0;padding:5px 10px;font-size:10px;border-radius:4px !important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.pf-before{background:rgba(239,231,220,.92)}.pf-after{background:rgba(225,238,233,.92)}
+/* cases come in one after another, left to right */
+.pf-page.rv-ready .pf-case[data-rv="card"]{transform:translateX(-40px)}
+.pf-page.rv-ready.rv-in .pf-case[data-rv="card"]{transform:none}
