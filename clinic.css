@@ -592,3 +592,6 @@ body:has(.db)>header,body:has(.db) .app-head,body:has(.db) .wa-float,body:has(.d
 .db .btn.ghost{background:rgba(0,0,0,.06) !important;border:0 !important;color:var(--ink) !important}
 .db #portalDetails .panel-title h3,.db #adminCaseDetails .panel-title h3{font-size:24px !important;font-weight:700;letter-spacing:-.02em}
 .db .consent-panel .eyebrow{text-transform:none}
+
+/* buttons: a slight, professional curve (everything else stays square) */
+html body .btn,html body .au-btn,html body .gp-btn,html body .db-btn,html body button.btn,html body a.btn,html body input[type=submit]{border-radius:6px !important}
