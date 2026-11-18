@@ -120,7 +120,7 @@ lastP=p;
   });
   lsvg.innerHTML=ll;
 
-  body.classList.toggle('cc-intro',p<.33);
+  body.classList.toggle('cc-intro',p<.33&&hero.getBoundingClientRect().top<=2);
 }
 let ticking=false;
 function onScroll(){
@@ -131,6 +131,7 @@ function onScroll(){
     if(!onHome){body.classList.remove('cc-intro','cc-past');return} // portal/staff view
     const r=hero.getBoundingClientRect(),total=hero.offsetHeight-innerHeight;
     body.classList.toggle('cc-past',r.bottom<=(header?header.offsetHeight:0)+1);
+    body.classList.toggle('cc-above',r.top>2); // still on the photo hero above the card animation
     const q=clamp(-r.top/total);let p=played?START+(1-START)*q:q;
     if(!played&&!reduce&&p>=START){
       // the intro has now played: remember it, and cut it out of the page so it can't be scrolled back to
