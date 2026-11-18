@@ -728,3 +728,24 @@ html body .hp-hero h1{text-transform:uppercase !important;font-weight:400 !impor
 html body .hp-hero p{font-size:14px;line-height:1.6;max-width:440px;margin:0 0 30px}
 .hp-btn{font-size:12px;letter-spacing:.06em}
 @media(max-width:760px){html body .hp-hero h1{font-size:32px !important}html body .hp-hero p{font-size:14px}.hp-hero-inner{padding:0 22px 36px}}
+
+/* ===== how it works: photo cards ===== */
+#process .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+#process .step{position:relative;overflow:hidden;min-height:clamp(380px,34vw,480px);padding:26px 24px 28px !important;border:0 !important;border-radius:10px !important;background:#111a19;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate}
+#process .step::before{display:none !important}
+#process .step-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+#process .step::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(10,14,13,.94) 0%,rgba(10,14,13,.78) 38%,rgba(10,14,13,.25) 68%,rgba(10,14,13,.05) 100%)}
+#process .step:hover .step-img{transform:scale(1.05)}
+#process .step .number{position:absolute;top:22px;left:24px;font-family:var(--display);font-size:44px !important;font-weight:400;letter-spacing:-.04em;color:#fff !important;line-height:1;opacity:.95}
+#process .step h3{color:#fff !important;font-size:22px;margin:0 0 10px}
+#process .step p{color:rgba(255,255,255,.8) !important;font-size:14px;line-height:1.6;margin:0}
+/* slow drop-in, one after another from left to right */
+#process.rv-ready .step[data-rv]{transform:translateY(-90px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1) var(--rv-d,0ms),transform 1.3s cubic-bezier(.2,.8,.2,1) var(--rv-d,0ms)}
+#process.rv-ready.rv-in .step[data-rv]{transform:none}
+#process .step:nth-child(1){--rv-d:300ms !important}
+#process .step:nth-child(2){--rv-d:650ms !important}
+#process .step:nth-child(3){--rv-d:1000ms !important}
+#process .step:nth-child(4){--rv-d:1350ms !important}
+@media(max-width:1000px){#process .process-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){#process .process-grid{grid-template-columns:1fr}#process .step{min-height:360px}}
+@media(min-width:601px){#process .step p{min-height:8em}}
