@@ -10,7 +10,7 @@ const hero=$('home'),stage=$('ccStage');
 if(!hero||!stage)return;
 const intro=$('ccIntro'),worn=$('ccWorn'),white=$('ccWhite'),shadow=$('ccShadow'),svg=$('ccLines'),
       loupes=[...document.querySelectorAll('.cc-loupe')],wrap=$('ccCardWrap'),card=$('ccCard'),shine=$('ccShine'),frontNew=$('ccFrontNew'),
-      copy=$('ccCopy'),disc=$('ccDisclose'),head=$('clHead'),stack=$('clStack'),lsvg=$('clLines');
+      copy=$('ccCopy'),disc=$('ccDisclose'),head=$('clHead'),stack=$('clStack'),lsvg=$('clLines'),lsec=$('layers'),lstage=$('clStage');
 const layers=[...stack.children];
 layers.forEach(l=>{['r','l'].forEach(s=>{const a=document.createElement('i');a.className='cl-anchor cl-anchor-'+s;l.appendChild(a)})});                               // bottom (back print) → top (coating)
 const labels=[...document.querySelectorAll('#clLabels li')];    // 01 coating → 06 back print
@@ -25,7 +25,7 @@ const setHdr=()=>{if(header)document.documentElement.style.setProperty('--cc-hdr
 setHdr();
 
 // The opening (worn card + spin) plays once per browser. After that the page starts on the restored card.
-const START=.37;let played=false;try{played=localStorage.getItem('cc_intro_played')==='1'}catch(e){}
+const START=.37,MID=.54;let played=false;try{played=localStorage.getItem('cc_intro_played')==='1'}catch(e){}
 if(played)hero.classList.add('cc-played');
 let lastP=0,shineAt=0;
 const isResting=v=>v>=.37&&v<=.42;
@@ -37,7 +37,7 @@ function render(p){if(isResting(p)&&!isResting(lastP)&&lastP>p)setTimeout(playSh
 lastP=p;
   const W=stage.clientWidth,H=stage.clientHeight,mobile=W<=1000;
   const ch=mobile?H*.4:Math.min(H*.6,540), cw=ch*.7104;
-  [worn,wrap,shadow,stack].forEach(el=>el.style.setProperty('--cw',cw+'px'));
+  [worn,wrap,shadow].forEach(el=>el.style.setProperty('--cw',cw+'px'));
   const sr=stage.getBoundingClientRect();
 
   // ---- A: worn card + headline + inspection boxes ----
@@ -68,7 +68,7 @@ lastP=p;
   scale=lerp(scale,ls,fly);
   const cx=lerp(lerp(wx,sx,settle),mx,fly), cy=lerp(lerp(wy,sy,settle),my,fly);
   const bob=Math.sin(p*60)*4*settle*(1-fly)*seg(p,.26,.3);
-  wrap.style.opacity=p<.54?1:0;
+  wrap.style.opacity=1;
   wrap.style.transform=`translate(${cx-cw/2}px,${cy-ch/2+bob}px) scale(${scale})`;
   const rotY=360*flip;
   frontNew.style.opacity=360*flip>=180?1:0;               // front face shows the restored card once it has turned away
@@ -83,15 +83,22 @@ lastP=p;
   const cr=card.getBoundingClientRect(),srr=stage.getBoundingClientRect();
   const shW=Math.max(cr.width*.82,8), shX=cr.left-srr.left+cr.width/2, shY=cr.bottom-srr.top+(mobile?14:22)+Math.max(0,-bob)*.4;
   shadow.style.transform=`translate(${shX-cw/2}px,${shY-13}px) scaleX(${shW/cw})`;
-  shadow.style.opacity=p<.54?lerp(.55,1,edge):0;
+  shadow.style.opacity=lerp(.55,1,edge);
   const c=0; // no headline stop: the card goes straight on to its six layers
   copy.style.opacity=c;copy.style.pointerEvents=c>.5?'auto':'none';
   copy.style.transform=(mobile?'':'translateY(-50%) ')+`translateY(${lerp(24,0,out(seg(p,.31,.37)))-20*seg(p,.42,.46)}px)`;
   disc.style.opacity=0;
 
+  body.classList.toggle('cc-intro',p<.33&&hero.getBoundingClientRect().top<=2);
+}
+function renderLayers(p){
+  const W=lstage.clientWidth,H=lstage.clientHeight,mobile=W<=1000;
+  const ch=mobile?H*.4:Math.min(H*.6,540), cw=ch*.7104;
+  stack.style.setProperty('--cw',cw+'px');
+  const sr=lstage.getBoundingClientRect();
+  const mx=W/2, my=mobile?H*.46:H*.54, ls=mobile?.54:.84;
   // ---- E: six layers ----
-  const inLayers=p>=.54;
-  stack.style.visibility=inLayers?'visible':'hidden';
+  stack.style.visibility='visible';
   const lie=ease(seg(p,.54,.60))*(1-ease(seg(p,.95,1)));
   const open=ease(seg(p,.58,.70))*(1-ease(seg(p,.86,.93)));
   const lx0=lerp(mx,mobile?W*.34:W*.55,ease(seg(p,.54,.60))*(1-ease(seg(p,.95,1))));
@@ -99,7 +106,7 @@ lastP=p;
   stack.style.transform=`translate(${lx0-cw/2}px,${sy0-ch/2}px) scale(${ls}) rotateX(${58*lie}deg) rotateZ(${-34*lie}deg)`;
   const g=(mobile?90:Math.min(88,H*.1))*open;
   layers.forEach((el,i)=>{const o=i-(layers.length-1)/2;el.style.transform=`translateZ(${o*g+o*.6}px)`});
-  head.style.opacity=seg(p,.50,.56)*(1-seg(p,.96,1));
+  head.style.opacity=seg(p,.54,.58)*(1-seg(p,.96,1));
   const show=seg(p,.66,.73)*(1-seg(p,.82,.86));
   let ll='';
   labels.forEach((li,n)=>{
@@ -120,7 +127,6 @@ lastP=p;
   });
   lsvg.innerHTML=ll;
 
-  body.classList.toggle('cc-intro',p<.33&&hero.getBoundingClientRect().top<=2);
 }
 let ticking=false;
 function onScroll(){
@@ -132,15 +138,16 @@ function onScroll(){
     const r=hero.getBoundingClientRect(),total=hero.offsetHeight-innerHeight;
     body.classList.toggle('cc-past',r.bottom<=(header?header.offsetHeight:0)+1);
     body.classList.toggle('cc-above',r.top>2); // still on the photo hero above the card animation
-    const q=clamp(-r.top/total);let p=played?START+(1-START)*q:q;
+    const q=clamp(-r.top/total);let p=played?START+(MID-START)*q:MID*q;
     if(!played&&!reduce&&p>=START){
       // the intro has now played: remember it, and cut it out of the page so it can't be scrolled back to
       played=true;try{localStorage.setItem('cc_intro_played','1')}catch(e){}
       const top0=scrollY+r.top;hero.classList.add('cc-played');
       const nt=hero.offsetHeight-innerHeight;
-      scrollTo({top:top0+((p-START)/(1-START))*nt,behavior:'instant'});
+      scrollTo({top:top0+((p-START)/(MID-START))*nt,behavior:'instant'});
     }
     render(reduce?.5:p);
+    if(lsec&&lstage){const lr=lsec.getBoundingClientRect(),lt=lsec.offsetHeight-innerHeight;renderLayers(reduce?.75:MID+(1-MID)*clamp(-lr.top/lt))}
   });
 }
 addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',()=>{setHdr();onScroll()});addEventListener('hashchange',()=>setTimeout(onScroll,50));

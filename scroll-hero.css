@@ -189,3 +189,8 @@ header .nav{min-height:80px}
   .cc-copy{left:40px;right:40px;top:auto;bottom:7vh;max-width:640px}
   .cc-copy p br{display:none}
 }
+
+/* hero = spin only (0 → .54), the six layers have their own section after Real results */
+#home.cc-scroll{height:559vh}
+#home.cc-scroll.cc-played{height:244.5vh}
+#layers.cc-scroll{height:491vh;margin-top:0 !important}
