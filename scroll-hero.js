@@ -61,19 +61,19 @@ lastP=p;
 
   // ---- B + C + D: flip over to the restored side, slide to the side, then fly to the middle ----
   const flip=ease(seg(p,.04,.26)),settle=ease(seg(p,.20,.33)),fly=ease(seg(p,.44,.54));
-  const sx=mobile?W/2:W*.64, sy=mobile?H*.34:H*.5;          // settled hero position
   const mx=W/2, my=mobile?H*.46:H*.54;                       // middle, where it breaks apart
+  const sx=mx, sy=my;                                        // after the spin it stays in the middle and opens into its layers
   const ls=mobile?.54:.84;                                   // card size while showing the layers
-  let scale=lerp(1,mobile?.72:.82,settle)*(1+.06*Math.sin(flip*Math.PI));
+  let scale=lerp(1,ls,settle)*(1+.06*Math.sin(flip*Math.PI));
   scale=lerp(scale,ls,fly);
   const cx=lerp(lerp(wx,sx,settle),mx,fly), cy=lerp(lerp(wy,sy,settle),my,fly);
   const bob=Math.sin(p*60)*4*settle*(1-fly)*seg(p,.26,.3);
   wrap.style.opacity=p<.54?1:0;
   wrap.style.transform=`translate(${cx-cw/2}px,${cy-ch/2+bob}px) scale(${scale})`;
-  const rotY=360*flip+lerp(0,mobile?-14:-26,settle)*(1-fly);
+  const rotY=360*flip;
   frontNew.style.opacity=360*flip>=180?1:0;               // front face shows the restored card once it has turned away
-  const rotX=lerp(0,mobile?8:12,settle)*(1-fly)+Math.sin(flip*Math.PI)*8;
-  const rotZ=lerp(0,mobile?-6:-14,settle)*(1-fly);
+  const rotX=Math.sin(flip*Math.PI)*8;
+  const rotZ=0;
   card.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
   const sh=seg(p,.255,.275)*(1-seg(p,.345,.365));shine.style.opacity=sh;
   shine.style.transform='translateX('+lerp(-95,95,ease(seg(p,.255,.365)))+'%)';
@@ -84,7 +84,7 @@ lastP=p;
   const shW=Math.max(cr.width*.82,8), shX=cr.left-srr.left+cr.width/2, shY=cr.bottom-srr.top+(mobile?14:22)+Math.max(0,-bob)*.4;
   shadow.style.transform=`translate(${shX-cw/2}px,${shY-13}px) scaleX(${shW/cw})`;
   shadow.style.opacity=p<.54?lerp(.55,1,edge):0;
-  const c=out(seg(p,.31,.37))*(1-seg(p,.42,.46));
+  const c=0; // no headline stop: the card goes straight on to its six layers
   copy.style.opacity=c;copy.style.pointerEvents=c>.5?'auto':'none';
   copy.style.transform=(mobile?'':'translateY(-50%) ')+`translateY(${lerp(24,0,out(seg(p,.31,.37)))-20*seg(p,.42,.46)}px)`;
   disc.style.opacity=0;

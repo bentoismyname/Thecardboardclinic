@@ -749,3 +749,4 @@ html body .hp-hero p{font-size:14px;line-height:1.6;max-width:440px;margin:0 0 3
 @media(max-width:1000px){#process .process-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){#process .process-grid{grid-template-columns:1fr}#process .step{min-height:360px}}
 @media(min-width:601px){#process .step p{min-height:8em}}
+#ccCopy{display:none !important}
