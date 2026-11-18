@@ -637,3 +637,22 @@ html body .cc-link:hover{background:#1f7a4a;transform:translateY(-1px)}
   .pf-hero::after{display:block;background:linear-gradient(0deg,rgba(10,14,13,.95) 0%,rgba(10,14,13,.8) 38%,rgba(10,14,13,.15) 70%,rgba(10,14,13,0) 100%)}
   .pf-hero>*:not(img){padding:0}
 }
+
+/* pricing: two charts side by side on desktop, one continuous chart on phones */
+.gp-table{max-width:1180px !important}
+.gp-groups{display:grid;grid-template-columns:1fr 1fr}
+.gp-group+.gp-group{border-left:1px solid rgba(255,255,255,.16)}
+.gp-ghead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:22px 28px 14px;border-bottom:1px solid rgba(255,255,255,.16);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#bfe0d6}
+.gp-ghead b{display:block;font-size:13px;color:#fff;letter-spacing:.12em}
+.gp-ghead small{display:block;margin-top:5px;font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:#b5cfc8}
+.gp-ghead>span:last-child{white-space:nowrap;padding-bottom:2px}
+.gp-group .gp-row{grid-template-columns:26px 1fr auto !important;padding-left:28px;padding-right:28px}
+.gp-group .gp-p{font-size:20px}
+.gp-addon{font-style:normal;margin-left:8px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border:1px solid rgba(255,255,255,.45);vertical-align:2px}
+@media(max-width:900px){
+  .gp-groups{grid-template-columns:1fr}
+  .gp-group+.gp-group{border-left:0}
+  .gp-ghead{padding:18px 16px 12px}
+  .gp-ghead>span:last-child{display:none}
+  .gp-group .gp-row{grid-template-columns:24px 1fr auto !important;grid-template-areas:"b t p" !important;padding:14px 16px}
+}
