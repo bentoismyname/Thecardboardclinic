@@ -693,3 +693,26 @@ body.cc-home.cc-above header{background:rgba(245,241,233,.96) !important;border-
 }
 @media(max-width:760px){.hp-btn{padding:14px 12px;font-size:12px;letter-spacing:.04em;white-space:nowrap}}
 .hp-hero + .cc-scroll{margin-top:0 !important}
+
+/* ===== buttons: no bright green; colour change + label roll-up on hover ===== */
+.roll{position:relative;display:inline-flex;overflow:hidden;vertical-align:top}
+.roll-a,.roll-b{display:inline-flex;align-items:center;gap:inherit;transition:transform .42s cubic-bezier(.65,0,.35,1)}
+.roll-b{position:absolute;left:0;top:0;width:100%;justify-content:inherit;transform:translateY(105%)}
+a:hover>.roll .roll-a,button:hover>.roll .roll-a{transform:translateY(-105%)}
+a:hover>.roll .roll-b,button:hover>.roll .roll-b{transform:translateY(0)}
+.cc-link>.roll,.hp-btn>.roll,.gp-btn>.roll,.au-btn>.roll{gap:10px}
+.cc-link:hover,.hp-btn:hover,.gp-btn:hover{transform:none !important}
+@media(prefers-reduced-motion:reduce){.roll-a,.roll-b{transition:none}}
+
+/* homepage hero buttons */
+.hp-btn{transition:background .3s ease,color .3s ease,border-color .3s ease}
+.hp-btn-solid{background:#fff !important;color:#111a19 !important}
+.hp-btn-solid:hover{background:#1f7a4a !important;color:#fff !important}
+.hp-btn-ghost{border:1px solid rgba(255,255,255,.55);color:#fff !important}
+.hp-btn-ghost:hover{background:#fff !important;color:#111a19 !important;border-color:#fff}
+/* other main buttons get the same colour change */
+html body .cc-link:hover{background:#1f7a4a}
+header .nav-actions .btn{transition:background .3s ease}
+header .nav-actions .btn:hover{background:#1f7a4a !important}
+.gp-btn-solid{transition:background .3s ease,color .3s ease}
+.gp-btn-solid:hover{background:#111a19 !important;color:#fff !important;border-color:#111a19 !important}
