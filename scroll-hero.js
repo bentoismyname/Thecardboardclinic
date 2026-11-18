@@ -96,16 +96,19 @@ function renderLayers(p){
   const ch=mobile?H*.4:Math.min(H*.6,540), cw=ch*.7104;
   stack.style.setProperty('--cw',cw+'px');
   const sr=lstage.getBoundingClientRect();
-  const mx=W/2, my=mobile?H*.46:H*.54, ls=mobile?.54:.84;
+  const mx=W/2, my=mobile?H*.46:H*.54, ls=mobile?.4:.54;
   // ---- E: six layers ----
   stack.style.visibility='visible';
   const lie=ease(seg(p,.54,.60))*(1-ease(seg(p,.95,1)));
   const open=ease(seg(p,.58,.70))*(1-ease(seg(p,.86,.93)));
-  const lx0=lerp(mx,mobile?W*.34:W*.55,ease(seg(p,.54,.60))*(1-ease(seg(p,.95,1))));
-  const sy0=lerp(my,mobile?my:H*.55,lie);
-  stack.style.transform=`translate(${lx0-cw/2}px,${sy0-ch/2}px) scale(${ls}) rotateX(${58*lie}deg) rotateZ(${-34*lie}deg)`;
-  const g=(mobile?90:Math.min(88,H*.1))*open;
-  layers.forEach((el,i)=>{const o=i-(layers.length-1)/2;el.style.transform=`translateZ(${o*g+o*.6}px)`});
+  const lx0=lerp(mx,mobile?W*.32:W*.5,ease(seg(p,.54,.60))*(1-ease(seg(p,.95,1))));
+  const sy0=lerp(my,mobile?H*.58:H*.55,lie);
+  stack.style.transform=`translate(${lx0-cw/2}px,${sy0-ch/2}px) scale(${ls}) rotateX(${68*lie}deg) rotateY(${(mobile?10:28)*lie}deg) rotateZ(${(mobile?16:40)*lie}deg)`;
+  // exploded view: the parts float apart along a diagonal, each with its own slight tilt, drifting gently
+  // exploded view: the parts float apart along the card's own axis, seen from a three-quarter angle
+  const k=(mobile?Math.min(W/430,H/800)*.95:Math.min(1,H/900))*open;
+  layers.forEach((el,i)=>{const o=i-(layers.length-1)/2,f=Math.sin(p*40+i*1.3)*6*open;
+    el.style.transform=`translateZ(${o*185*k+o*.6+f}px)`});
   head.style.opacity=seg(p,.54,.58)*(1-seg(p,.96,1));
   const show=seg(p,.66,.73)*(1-seg(p,.82,.86));
   let ll='';
