@@ -716,3 +716,15 @@ header .nav-actions .btn{transition:background .3s ease}
 header .nav-actions .btn:hover{background:#1f7a4a !important}
 .gp-btn-solid{transition:background .3s ease,color .3s ease}
 .gp-btn-solid:hover{background:#111a19 !important;color:#fff !important;border-color:#111a19 !important}
+/* hero text: lines up with the logo, sits in the lower part of the photo */
+@media(min-width:761px){
+  .hp-hero{align-items:flex-end}
+  .hp-hero-inner{margin-left:max(38px,calc((100vw - 1240px)/2 + 38px));padding:0 0 clamp(56px,11vh,110px);max-width:540px}
+  .hp-hero h1{font-size:clamp(40px,4.2vw,62px) !important;margin-bottom:18px}
+  .hp-hero p{font-size:16px;margin-bottom:28px}
+}
+/* same headline typography as the card hero ("Got a card that needs some help?") */
+html body .hp-hero h1{text-transform:uppercase !important;font-weight:400 !important;letter-spacing:-.045em !important;line-height:.98 !important;font-size:clamp(34px,3.8vw,56px) !important;margin:0 0 22px}
+html body .hp-hero p{font-size:14px;line-height:1.6;max-width:440px;margin:0 0 30px}
+.hp-btn{font-size:12px;letter-spacing:.06em}
+@media(max-width:760px){html body .hp-hero h1{font-size:32px !important}html body .hp-hero p{font-size:14px}.hp-hero-inner{padding:0 22px 36px}}
