@@ -347,6 +347,7 @@ create table if not exists public.case_consents (
  signer_capacity text not null default 'Owner',
  marketing_consent boolean not null default false,
  acknowledgements integer[] not null,
+ signature_image text check(signature_image is null or (signature_image like 'data:image/png;base64,%' and length(signature_image)<400000)),
  created_at timestamptz not null default now(),
  admin_verified_at timestamptz,
  verified_by uuid references auth.users(id),
@@ -396,8 +397,8 @@ begin
   if new.admin_verified_at is not null then raise exception 'Cannot self-verify consent';end if;
  elsif tg_op='UPDATE' then
   if not public.is_staff() then raise exception 'Staff authorisation required'; end if;
-  if (old.case_id,old.agreement_version,old.scope_snapshot,old.signer_name,old.signer_capacity,old.marketing_consent,old.acknowledgements,old.created_at)
-    is distinct from (new.case_id,new.agreement_version,new.scope_snapshot,new.signer_name,new.signer_capacity,new.marketing_consent,new.acknowledgements,new.created_at)
+  if (old.case_id,old.agreement_version,old.scope_snapshot,old.signer_name,old.signer_capacity,old.marketing_consent,old.acknowledgements,old.created_at,old.signature_image)
+    is distinct from (new.case_id,new.agreement_version,new.scope_snapshot,new.signer_name,new.signer_capacity,new.marketing_consent,new.acknowledgements,new.created_at,new.signature_image)
   then raise exception 'Signed agreement records are immutable';end if;
   if old.admin_verified_at is not null then raise exception 'Already verified';end if;
   if new.admin_verified_at is null or new.verified_by<>auth.uid() then raise exception 'Staff verification identity required';end if;

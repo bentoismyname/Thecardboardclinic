@@ -753,3 +753,18 @@ html body .hp-hero p{font-size:14px;line-height:1.6;max-width:440px;margin:0 0 3
 /* portfolio: photo hero starts right under the header */
 .pf-page{padding-top:0 !important}
 .pf-page>.container>.pf-hero:first-child{margin-top:0 !important}
+
+/* signed consent summary + signature pad */
+.cf-done{background:#fff;border-radius:12px;padding:16px 18px;margin:14px 0;box-shadow:0 0 0 .5px rgba(0,0,0,.08)}
+.cf-done-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}.cf-done-head b{display:block;font-size:15px}.cf-done-head small{color:#6e6e73;font-size:13px}
+.cf-tick{width:30px;height:30px;border-radius:50% !important;display:grid;place-items:center;background:#1f7a4a;color:#fff;font-weight:700;flex-shrink:0}
+.cf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px 18px;margin:0}.cf-grid dt{font-size:12px;color:#86868b}.cf-grid dd{margin:2px 0 0;font-size:14px;font-weight:500;word-break:break-word}
+.cf-actions{margin-top:14px;display:flex;gap:10px}.cf-wait{font-size:14px;color:#b25000;margin:12px 0}.cf-fine{font-size:12px;color:#86868b;margin:16px 0 0}
+.cf-sigshow{margin:0 0 14px;padding:10px 14px;border-bottom:1px solid #e5e5ea}.cf-sigshow img{display:block;max-height:70px;max-width:100%}.cf-sigshow small{font-size:12px;color:#86868b}
+.sigpad{margin-top:16px}.sigpad-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:13px;font-weight:600}
+.sigpad-clear{border:0;background:none;color:#1f7a4a;font:600 13px inherit;cursor:pointer;padding:4px 0}
+.sigpad-canvas{display:block;width:100%;height:170px;background:#fff;border:1px solid #d2d2d7;border-radius:10px;touch-action:none;cursor:crosshair;
+ background-image:linear-gradient(#fff,#fff),linear-gradient(90deg,#c7c7cc,#c7c7cc);background-size:100% 100%,calc(100% - 40px) 1px;background-position:0 0,20px 75%;background-repeat:no-repeat;background-clip:padding-box,padding-box}
+.sigpad-canvas{background:linear-gradient(#c7c7cc,#c7c7cc) 20px 75%/calc(100% - 40px) 1px no-repeat,#fff}
+.sigpad small{display:block;margin-top:6px;font-size:12px;color:#86868b}
+.sigpad.has-ink small{visibility:hidden}
