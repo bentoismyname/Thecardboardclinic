@@ -191,6 +191,6 @@ header .nav{min-height:80px}
 }
 
 /* hero = spin only (0 → .54), the six layers have their own section after Real results */
-#home.cc-scroll{height:559vh}
-#home.cc-scroll.cc-played{height:244.5vh}
+#home.cc-scroll{height:389vh}
+#home.cc-scroll.cc-played{display:none}
 #layers.cc-scroll{height:491vh;margin-top:0 !important}

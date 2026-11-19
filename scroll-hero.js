@@ -25,7 +25,8 @@ const setHdr=()=>{if(header)document.documentElement.style.setProperty('--cc-hdr
 setHdr();
 
 // The opening (worn card + spin) plays once per browser. After that the page starts on the restored card.
-const START=.37,MID=.54;let played=false;try{played=localStorage.getItem('cc_intro_played')==='1'}catch(e){}
+const MID=.54,END=.34; // the hero ends as soon as the spin lands
+let played=false;try{played=localStorage.getItem('cc_intro_played')==='1'}catch(e){}
 if(played)hero.classList.add('cc-played');
 let lastP=0,shineAt=0;
 const isResting=v=>v>=.37&&v<=.42;
@@ -135,21 +136,18 @@ let ticking=false;
 function onScroll(){
   if(ticking)return;ticking=true;
   requestAnimationFrame(()=>{ticking=false;
-    const onHome=!!hero.offsetHeight;
+    const onHome=!!(hero.offsetHeight||(lsec&&lsec.offsetHeight));
     body.classList.toggle('cc-home',onHome);
     if(!onHome){body.classList.remove('cc-intro','cc-past');return} // portal/staff view
+    if(hero.offsetHeight){
     const r=hero.getBoundingClientRect(),total=hero.offsetHeight-innerHeight;
     body.classList.toggle('cc-past',r.bottom<=(header?header.offsetHeight:0)+1);
     body.classList.toggle('cc-above',r.top>2); // still on the photo hero above the card animation
-    const q=clamp(-r.top/total);let p=played?START+(MID-START)*q:MID*q;
-    if(!played&&!reduce&&p>=START){
-      // the intro has now played: remember it, and cut it out of the page so it can't be scrolled back to
-      played=true;try{localStorage.setItem('cc_intro_played','1')}catch(e){}
-      const top0=scrollY+r.top;hero.classList.add('cc-played');
-      const nt=hero.offsetHeight-innerHeight;
-      scrollTo({top:top0+((p-START)/(MID-START))*nt,behavior:'instant'});
-    }
-    render(reduce?.5:p);
+    const p=END*clamp(-r.top/total);
+    // once the spin has played, later visits skip it (the section is hidden on the next load)
+    if(p>=END-.01){try{localStorage.setItem('cc_intro_played','1')}catch(e){}}
+    render(reduce?END:p);
+    }else{const b=$('before-after');body.classList.add('cc-past');body.classList.toggle('cc-above',!!b&&b.getBoundingClientRect().top>2)}
     if(lsec&&lstage){const lr=lsec.getBoundingClientRect(),lt=lsec.offsetHeight-innerHeight;renderLayers(reduce?.75:MID+(1-MID)*clamp(-lr.top/lt))}
   });
 }
