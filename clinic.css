@@ -768,3 +768,33 @@ html body .hp-hero p{font-size:14px;line-height:1.6;max-width:440px;margin:0 0 3
 .sigpad-canvas{background:linear-gradient(#c7c7cc,#c7c7cc) 20px 75%/calc(100% - 40px) 1px no-repeat,#fff}
 .sigpad small{display:block;margin-top:6px;font-size:12px;color:#86868b}
 .sigpad.has-ink small{visibility:hidden}
+
+/* ===== one client, many cards ===== */
+.in-hint{font-size:13px;color:#5d6b62;margin:10px 0 0}
+.in-card{border:1px solid #dfe5de;background:#fafcfa;padding:16px;margin:0 0 14px;min-width:0}
+.in-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.in-card-top strong{font:600 15px 'Inter Tight',sans-serif}
+.in-remove,.pick-open,.db-back{border:0;background:none;color:#2e7d4f;font:500 13px 'Inter Tight',sans-serif;cursor:pointer;padding:6px 0}
+.in-remove{color:#a23b2a}
+.in-sub{display:block;font-size:13px;margin:16px 0 4px}
+.in-prio{display:flex;gap:10px;align-items:center;margin:12px 0}
+.in-more{margin-top:14px;border-top:1px solid #e5eae4;padding-top:12px}
+.in-more summary{cursor:pointer;font-size:13px;color:#2e7d4f;margin-bottom:10px}
+.in-quote-msg{display:block;font-size:12px;color:#5d6b62;margin-top:8px}
+.db-back{display:block;margin-bottom:10px}
+.db-acts{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.db-flash{background:#dff1e4;border:1px solid #9fcfae;color:#14532d;padding:12px 16px;margin-bottom:16px;font-size:14px}
+.pick-all{display:flex;gap:10px;align-items:center;font-size:13px;color:#5d6b62;padding:4px 10px 10px}
+.pick-list{display:flex;flex-direction:column}
+.pick-row{display:flex;align-items:center;gap:12px;padding:12px 10px;border-top:1px solid #eef1ed;cursor:default}
+label.pick-row{cursor:pointer}
+.pick-row>span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column}
+.pick-row b{font-weight:600;font-size:14px}.pick-row small{color:#7c8a80;font-size:12px}
+.pick-row input,.pick-all input{width:18px;height:18px;flex-shrink:0;accent-color:#2e7d4f}
+.db-row-cta{background:#f3faf5;border:1px solid #9fcfae !important;margin-bottom:6px}
+.db-clientlink{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0 18px;padding:12px 14px;border:1px solid #dfe5de;background:#fafcfa;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.db-clientlink:hover{background:#f1f6f1}
+.db-clientlink span{flex:1;display:flex;flex-direction:column}.db-clientlink small{color:#7c8a80;font-size:12px}
+.db-clientlink i{font-style:normal;color:#2e7d4f;font-size:13px;white-space:nowrap}
+#consentAllForm{margin-top:14px}
+@media(max-width:700px){.pick-row{flex-wrap:wrap}.pick-row>span:nth-child(2){flex-basis:calc(100% - 40px)}.pick-row .db-chip{margin-left:30px}}
