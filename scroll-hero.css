@@ -194,3 +194,6 @@ header .nav{min-height:80px}
 #home.cc-scroll{height:389vh}
 #home.cc-scroll.cc-played{display:none}
 #layers.cc-scroll{height:491vh;margin-top:0 !important}
+
+/* six layers section hidden for now */
+#layers.cc-scroll{display:none}

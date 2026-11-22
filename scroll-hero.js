@@ -136,7 +136,7 @@ let ticking=false;
 function onScroll(){
   if(ticking)return;ticking=true;
   requestAnimationFrame(()=>{ticking=false;
-    const onHome=!!(hero.offsetHeight||(lsec&&lsec.offsetHeight));
+    const onHome=!!(hero.offsetHeight||$('before-after')?.offsetHeight);
     body.classList.toggle('cc-home',onHome);
     if(!onHome){body.classList.remove('cc-intro','cc-past');return} // portal/staff view
     if(hero.offsetHeight){
@@ -148,7 +148,7 @@ function onScroll(){
     if(p>=END-.01){try{localStorage.setItem('cc_intro_played','1')}catch(e){}}
     render(reduce?END:p);
     }else{const b=$('before-after');body.classList.add('cc-past');body.classList.toggle('cc-above',!!b&&b.getBoundingClientRect().top>2)}
-    if(lsec&&lstage){const lr=lsec.getBoundingClientRect(),lt=lsec.offsetHeight-innerHeight;renderLayers(reduce?.75:MID+(1-MID)*clamp(-lr.top/lt))}
+    if(lsec&&lstage&&lsec.offsetHeight){const lr=lsec.getBoundingClientRect(),lt=lsec.offsetHeight-innerHeight;renderLayers(reduce?.75:MID+(1-MID)*clamp(-lr.top/lt))}
   });
 }
 addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',()=>{setHdr();onScroll()});addEventListener('hashchange',()=>setTimeout(onScroll,50));
