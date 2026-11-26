@@ -7,7 +7,9 @@
 (()=>{'use strict';
 const cfg=window.CARDBOARD_CLINIC_CONFIG||{};
 const LIVE=!!(cfg.supabaseUrl&&cfg.supabaseAnonKey&&window.supabase);
-const db=LIVE?window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey):null;
+// Read any sign-in result from an email link before the Supabase client tidies the address bar.
+const AUTH_BACK=(()=>{if(typeof location==='undefined'||typeof URLSearchParams==='undefined')return {err:'',code:'',type:'',ok:false};const h=new URLSearchParams(location.hash.replace(/^#(portal)?[#&]?/,'')),s=new URLSearchParams(location.search);const err=h.get('error_description')||s.get('error_description');return {err:err?err.replace(/\+/g,' '):'',code:h.get('error_code')||s.get('error_code')||'',type:h.get('type')||s.get('type')||'',ok:h.has('access_token')||s.has('code')}})();
+const db=LIVE?window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey,{auth:{detectSessionInUrl:true,persistSession:true}}):null;
 const USD='SGD';
 const STAGES=['Registered','Intake & Photography','Initial Inspection','Diagnosis & Treatment Plan','Awaiting Client Signature','Form Verified','Payment Received','Treatment Scheduled','Treatment In Progress','Quality Control','Final Documentation','Ready for Return'];
 const PRICE_DEFAULT=[
@@ -137,7 +139,7 @@ function authFlipTo(mode){const card=document.querySelector('#portalContent .au-
 if(!card||still){authMode=mode;renderPortal();return}
 card.classList.add('au-flip-out');setTimeout(()=>{authMode=mode;renderPortal();const n=document.querySelector('#portalContent .au-card');if(n)n.classList.add('au-flip-in')},260)}
 
-const authRedirect=()=>location.origin+location.pathname+'#portal';
+const authRedirect=()=>location.origin+'/';
 async function portalSignup(f){const email=f.email.value.trim();if(f.password.value!==f.password2.value)throw Error('Passwords do not match.');if(!LIVE)throw Error('Accounts are opening soon. For an update on your card, WhatsApp us on 9822 1113.');const {data,error}=await db.auth.signUp({email,password:f.password.value,options:{emailRedirectTo:authRedirect()}});if(error){if(/rate limit/i.test(error.message))throw Error('Too many sign-ups right now. Please try again in a few minutes, or WhatsApp us on 9822 1113.');throw error}if(data.session){user=data.user;authMode='signin';await checkStaff();await refreshCases();renderPortal();return}authEmail=email;otpStart();authFlipTo('code')}
 async function portalReset(f){const {error}=await db.auth.resetPasswordForEmail(f.email.value.trim(),{redirectTo:authRedirect()});if(error){if(/rate limit/i.test(error.message))throw Error('Too many reset emails right now. Please try again in a few minutes.');throw error}f.reset();setMessage('#portalLoginMsg','If that email has an account, a reset link is on its way.')}
 async function portalNewPassword(f){const {data,error}=await db.auth.updateUser({password:f.password.value});if(error)throw error;user=data.user;authMode='signin';await checkStaff();await refreshCases();renderPortal()}
@@ -409,6 +411,10 @@ if(f.id==='historicalForm'){const n=Number(new FormData(f).get('historical_count
  if(f.id==='reviewForm'){if(!f.permission.checked)throw Error('Permission confirmation is required.');const obj={display_name:String(f.display_name.value).trim(),review_source:String(f.review_source.value).trim(),review_text:String(f.review_text.value).trim(),is_published:true};if(LIVE){const {data,error}=await db.from('client_reviews').insert(obj).select().single();if(error)throw error;reviews.unshift(data)}else reviews.unshift({...obj,id:uid(),created_at:new Date().toISOString()});persist();renderReviews();renderAdmin();setMessage('#reviewMsg','Review published.');return}
 }catch(err){const place=f.id==='consentForm'||f.id==='consentAllForm'?'#consentMsg':f.id==='bulkUpdate'?'#bulkMsg':f.id==='intakeForm'?'#intakeMsg':f.id==='settingsForm'?'#settingsMsg':f.id==='historicalForm'?'#historicalMsg':f.id==='portfolioForm'?'#portfolioMsg':f.id==='reviewForm'?'#reviewMsg':f.id==='uploadPhotos'?'#uploadMsg':f.id==='updateCase'?'#updateMsg':['portalLogin','portalSignup','portalReset','portalNewPassword','portalCode'].includes(f.id)?'#portalLoginMsg':'#adminLoginMsg';setMessage(place,err.message||'Unable to save',true)}finally{if(submit)submit.disabled=false}})
 }
-async function init(){document.getElementById('year').textContent=new Date().getFullYear();$('#demoBanner').hidden=LIVE;bind();if(LIVE){await loadLive();db.auth.onAuthStateChange((ev,s)=>{setTimeout(async()=>{if(ev==='PASSWORD_RECOVERY'){authMode='newpass';location.hash='#portal';route();renderPortal()}else if(ev==='SIGNED_OUT'){user=null;isStaff=false;cases=[];renderPortal();renderAdmin()}else if(ev==='SIGNED_IN'&&s?.user&&s.user.id!==user?.id){user=s.user;await checkStaff();await refreshCases();route()}},0)})}else renderPublic();route()}
+async function init(){document.getElementById('year').textContent=new Date().getFullYear();$('#demoBanner').hidden=LIVE;bind();if(LIVE){await loadLive();db.auth.onAuthStateChange((ev,s)=>{setTimeout(async()=>{if(ev==='PASSWORD_RECOVERY'){authMode='newpass';location.hash='#portal';route();renderPortal()}else if(ev==='SIGNED_OUT'){user=null;isStaff=false;cases=[];renderPortal();renderAdmin()}else if(ev==='SIGNED_IN'&&s?.user&&s.user.id!==user?.id){user=s.user;await checkStaff();await refreshCases();route()}},0)})}else renderPublic();
+if(AUTH_BACK.ok||AUTH_BACK.err){if(AUTH_BACK.type==='recovery'&&user)authMode='newpass';history.replaceState(null,'',location.pathname+'#portal');}
+route();
+if(AUTH_BACK.err){authMode='signin';renderPortal();setMessage('#portalLoginMsg',/expired|invalid/i.test(AUTH_BACK.err+AUTH_BACK.code)?'That email link has expired or was already used. If you already confirmed, just sign in. Otherwise create your account again to get a new link.':'That email link did not work: '+AUTH_BACK.err,true)}
+else if(AUTH_BACK.ok&&user&&authMode!=='newpass'){const f=$('#portalContent .db-head');if(f)f.insertAdjacentHTML('afterend','<div class="db-flash">Your email is confirmed and you are signed in.</div>')}}
 init().catch(e=>{console.error(e);$('#queueFootnote').textContent='Unable to initialise clinic data. Check project configuration.'});
 })();
