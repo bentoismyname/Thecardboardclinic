@@ -219,8 +219,10 @@ grant execute on function public.public_queue_count() to anon,authenticated;
 
 -- Secure image storage: no publicly listable or downloadable bucket.
 insert into storage.buckets (id,name,public,file_size_limit,allowed_mime_types)
-values ('case-media','case-media',false,8388608,array['image/jpeg','image/png','image/webp'])
-on conflict(id) do update set public=false,file_size_limit=8388608,allowed_mime_types=array['image/jpeg','image/png','image/webp'];
+values ('case-media','case-media',false,52428800,array['image/jpeg','image/png','image/webp','video/mp4','video/quicktime','video/webm'])
+on conflict(id) do update set public=false,file_size_limit=52428800,allowed_mime_types=array['image/jpeg','image/png','image/webp','video/mp4','video/quicktime','video/webm'];
+drop policy if exists clinic_media_staff_delete on storage.objects;
+create policy clinic_media_staff_delete on storage.objects for delete to authenticated using(bucket_id='case-media' and public.is_staff());
 
 drop policy if exists clinic_media_select on storage.objects;
 create policy clinic_media_select on storage.objects for select to authenticated
@@ -289,6 +291,8 @@ drop policy if exists portfolio_media_public_read on storage.objects;
 create policy portfolio_media_public_read on storage.objects for select to anon,authenticated using(bucket_id='portfolio-public');
 drop policy if exists portfolio_media_staff_upload on storage.objects;
 create policy portfolio_media_staff_upload on storage.objects for insert to authenticated with check(bucket_id='portfolio-public' and public.is_staff());
+drop policy if exists portfolio_media_staff_delete on storage.objects;
+create policy portfolio_media_staff_delete on storage.objects for delete to authenticated using(bucket_id='portfolio-public' and public.is_staff());
 
 
 -- V5: a transparent counter using historical cards + distinct closed records.
@@ -332,6 +336,8 @@ drop policy if exists portfolio_media_public_read on storage.objects;
 create policy portfolio_media_public_read on storage.objects for select to anon,authenticated using(bucket_id='portfolio-public');
 drop policy if exists portfolio_media_staff_upload on storage.objects;
 create policy portfolio_media_staff_upload on storage.objects for insert to authenticated with check(bucket_id='portfolio-public' and public.is_staff());
+drop policy if exists portfolio_media_staff_delete on storage.objects;
+create policy portfolio_media_staff_delete on storage.objects for delete to authenticated using(bucket_id='portfolio-public' and public.is_staff());
 
 
 -- V6 Cardboard Clinic consent and counter migration. Run AFTER V5 upgrade.

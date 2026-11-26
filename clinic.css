@@ -798,3 +798,21 @@ label.pick-row{cursor:pointer}
 .db-clientlink i{font-style:normal;color:#2e7d4f;font-size:13px;white-space:nowrap}
 #consentAllForm{margin-top:14px}
 @media(max-width:700px){.pick-row{flex-wrap:wrap}.pick-row>span:nth-child(2){flex-basis:calc(100% - 40px)}.pick-row .db-chip{margin-left:30px}}
+
+/* sign-up code */
+.au-codeinfo{font-size:14px;color:#3b4746;margin:0 0 14px;line-height:1.5}
+.au-code input{text-align:center;font-size:22px !important;letter-spacing:.3em}
+.au-timer{font-size:13px;color:#2e7d4f;margin:6px 0 4px;text-align:center;font-variant-numeric:tabular-nums}
+.au-timer.au-expired{color:#a23b2a}
+.au-resend{border:0;background:none;color:#111a19;text-decoration:underline;font:inherit;font-size:13px;cursor:pointer;padding:0}
+.au-btn:disabled{opacity:.45;cursor:not-allowed}
+/* delete + portfolio admin */
+.db-danger{color:#a23b2a !important;border-color:#e3b9b0 !important}
+.db-danger:hover{background:#fbeeea !important}
+.portfolio-admin-entry{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pa-thumbs{display:flex;gap:6px}.pa-thumbs img{width:54px;height:76px;object-fit:cover;background:#eef1ed;border:1px solid #dfe5de}
+.pa-thumbs img.pa-broken{outline:2px solid #a23b2a;outline-offset:-2px}
+.pa-info{flex:1;min-width:160px}.pa-acts{display:flex;gap:8px}
+/* videos in card records */
+.photo-video{background:#fff;border:1px solid #dfe5de;overflow:hidden}
+.photo-video video{display:block;width:100%;max-height:320px;background:#000}
