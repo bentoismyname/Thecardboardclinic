@@ -132,6 +132,11 @@ function renderLayers(p){
   lsvg.innerHTML=ll;
 
 }
+let lp=MID,lgoal=MID,lanim=0;
+function layerGo(goal){lgoal=goal;if(lanim)return;let last=performance.now();
+  const step=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const d=lgoal-lp;
+    lp=Math.abs(d)<.002?lgoal:lp+Math.sign(d)*Math.min(Math.abs(d),dt*.32);renderLayers(lp); // ~0.75s per open or close
+    lanim=lp===lgoal?0:requestAnimationFrame(step)};lanim=requestAnimationFrame(step)}
 let ticking=false;
 function onScroll(){
   if(ticking)return;ticking=true;
@@ -148,7 +153,9 @@ function onScroll(){
     if(p>=END-.01){try{localStorage.setItem('cc_intro_played','1')}catch(e){}}
     render(reduce?END:p);
     }else{const b=$('before-after');body.classList.add('cc-past');body.classList.toggle('cc-above',!!b&&b.getBoundingClientRect().top>2)}
-    if(lsec&&lstage&&lsec.offsetHeight){const lr=lsec.getBoundingClientRect(),lt=lsec.offsetHeight-innerHeight;renderLayers(reduce?.75:MID+(1-MID)*clamp(-lr.top/lt))}
+    if(lsec&&lstage&&lsec.offsetHeight){const lr=lsec.getBoundingClientRect(),lq=-lr.top/(lsec.offsetHeight-innerHeight);
+      // one scroll opens it, the next closes it, then the page moves on
+      layerGo(reduce?.78:lq<=0?MID:lq<.55?.78:1)}
   });
 }
 addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',()=>{setHdr();onScroll()});addEventListener('hashchange',()=>setTimeout(onScroll,50));
