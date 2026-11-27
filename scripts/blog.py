@@ -243,10 +243,10 @@ def head(title, desc, url, image, extra_ld):
 <link rel="canonical" href="{url}">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="article"><meta property="og:site_name" content="Cardboard Clinic"><meta property="og:locale" content="en_SG">
-<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}{image}">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(desc)}"><meta name="twitter:image" content="{SITE}{image}">
+<meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}/assets/share-icon.jpg"><meta property="og:image:width" content="800"><meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(desc)}"><meta name="twitter:image" content="{SITE}/assets/share-icon.jpg">
 <meta name="theme-color" content="#175c59">
-<link rel="icon" href="/assets/icon.png">
+<link rel="icon" type="image/png" href="/assets/favicon.png"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/blog/blog.css">
